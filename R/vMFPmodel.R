@@ -14,9 +14,9 @@
 #' @author Angela Andreella
 #' @return Returns list of matrices
 #' @export
-#' @import aaply plyr
+#' @import plyr aaply 
 #' @import foreach foreach
-#' @import %dopar% foreach
+#' @import foreach %dopar% 
 
 vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T){
   
@@ -38,7 +38,8 @@ vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, s
   }else{
     X<- data
   }
-
+  if(is.null(Q)){ Q <- matrix(0, nrow = col, ncol = col)
+  }
   
   if(is.null(ref_ds)){
     ref_ds <- M
@@ -50,9 +51,11 @@ vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, s
     out <-foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
         
-        GPASub(X[,,i], Q[,,i], k, ref_ds, scaling, reflection)
+       # GPASub(X[,,i], Q[,,i], k, ref_ds, scaling, reflection)
+        vMFP(X[,,i], k, Q[,,i], ref_ds, scaling, reflection)
       }else{
-        GPASub(X[,,i], Q, k, ref_ds, scaling, reflection) 
+      #  GPASub(X[,,i], Q, k, ref_ds, scaling, reflection) 
+        vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 
       }
      
     }

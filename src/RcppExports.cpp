@@ -6,6 +6,22 @@
 
 using namespace Rcpp;
 
+// vMFP
+List vMFP(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection);
+RcppExport SEXP _vMFPmodel_vMFP(SEXP XSEXP, SEXP kSEXP, SEXP QSEXP, SEXP ref_dsSEXP, SEXP scalingSEXP, SEXP reflectionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< float >::type k(kSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type ref_ds(ref_dsSEXP);
+    Rcpp::traits::input_parameter< bool >::type scaling(scalingSEXP);
+    Rcpp::traits::input_parameter< bool >::type reflection(reflectionSEXP);
+    rcpp_result_gen = Rcpp::wrap(vMFP(X, k, Q, ref_ds, scaling, reflection));
+    return rcpp_result_gen;
+END_RCPP
+}
 // svdC
 List svdC(arma::mat X);
 RcppExport SEXP _vMFPmodel_svdC(SEXP XSEXP) {
@@ -19,6 +35,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_vMFPmodel_vMFP", (DL_FUNC) &_vMFPmodel_vMFP, 6},
     {"_vMFPmodel_svdC", (DL_FUNC) &_vMFPmodel_svdC, 1},
     {NULL, NULL, 0}
 };
