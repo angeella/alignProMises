@@ -1,0 +1,3 @@
+useDynLib(vMFPmodel, .registration=TRUE)
+importFrom(Rcpp, evalCpp)
+exportPattern("^[[:alpha:]]+")

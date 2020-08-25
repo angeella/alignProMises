@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1598279766121.000,
+    "dirty" : true,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "300128023",
+    "id" : "BD7CCD66",
+    "lastKnownWriteTime" : 1598279764,
+    "last_content_update" : 1598279807432,
+    "path" : "C:/Users/Angela Andreella/Downloads/ARI.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "36,14",
+        "scrollLine" : "32"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

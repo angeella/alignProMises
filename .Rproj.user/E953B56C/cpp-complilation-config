@@ -1,0 +1,15 @@
+{
+    "args" : [
+        "-IC:/Program Files/RStudio/resources/libclang/builtin-headers/5.0.2",
+        "-IC:/Program Files/RStudio/resources/libclang/builtin-headers/libc++/5.0.2",
+        "-IC:/Users/ANGELA~1/DOCUME~1/R/WIN-LI~1/3.6/Rcpp/include",
+        "-IC:/Users/ANGELA~1/DOCUME~1/R/WIN-LI~1/3.6/RCPPAR~1/include",
+        "-std=gnu++11",
+        "-IC:/PROGRA~1/R/R-36~1.3/include",
+        "-DNDEBUG",
+        "-fopenmp"
+    ],
+    "hash" : "159825892515982589251598258925",
+    "is_cpp" : true,
+    "pch" : "Rcpp"
+}
