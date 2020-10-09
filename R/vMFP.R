@@ -1,6 +1,6 @@
-#' @title Generalized Procrustes Analysis with prior
-#' @description perform Generalized Procrustes Analysis with prior
-#' @usage GPASub(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
+#' @title von Mises Fisher Procrustes model
+#' @description perform functional alignment by von Mises Fisher Procrustes model
+#' @usage vMFP(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
 #' @param X data, i.e., list of matrices with dimension time points - voxels 
 #' @param Q maximum number of iteration
 #' @param k value of the concentration parameter of the prior distribution
@@ -10,10 +10,10 @@
 #' @author Angela Andreella
 #' @return Returns list of matrices
 #' @export 
-#' @import svds rARPACK
-#' @import Diagonal Matrix
+#' @importFrom rARPACK svds
+#' @importFrom Matrix Diagonal
 #' 
-GPASub <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
+vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   
   nc <- dim(X)[1]
   

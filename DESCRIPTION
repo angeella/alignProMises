@@ -1,11 +1,26 @@
-Package: vMFPmodel
+Package: vMFPmodelR
 Type: Package
 Title: What the package does (short line)
 Version: 1.0
 Date: 2020-08-24
 Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Maintainer: Angela Andreella <angela.andreella@phd.unipd.it>
 Description: More about what it does (maybe more than one line)
-License: What license is it under?
-Imports: Rcpp (>= 1.0.5)
-LinkingTo: Rcpp, RcppArmadillo, plyr, foreach
+License: GPL (>= 2)
+Imports: 
+  Rcpp (>= 1.0.3),
+  foreach, 
+  doParallel,
+  Matrix,
+  plyr
+LinkingTo: 
+  Rcpp, 
+  RcppArmadillo, 
+  plyr, 
+  foreach
+Suggests: 
+    knitr,
+    rmarkdown 
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+LazyData: true

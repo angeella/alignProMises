@@ -65,7 +65,7 @@ List vMFP(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, boo
 }
 
 /*** R
-X <- matrix(rnorm(5*5),5,5)
-out<- vMFP(X, k = 1, Q = matrix(rnorm(5*5),5,5), ref_ds = matrix(rnorm(5*5),5,5), scaling = TRUE, reflection = TRUE)
-str(out)
+#X <- matrix(rnorm(5*5),5,5)
+#out<- vMFP(X, k = 1, Q = matrix(rnorm(5*5),5,5), ref_ds = matrix(rnorm(5*5),5,5), scaling = TRUE, reflection = TRUE)
+#str(out)
 */

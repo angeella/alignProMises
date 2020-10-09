@@ -14,9 +14,9 @@
 #' @author Angela Andreella
 #' @return Returns list of matrices
 #' @export
-#' @import plyr aaply 
-#' @import foreach foreach
-#' @import foreach %dopar% 
+#' @importFrom plyr aaply 
+#' @importFrom foreach foreach
+#' @importFrom foreach %dopar%
 
 vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T){
   

@@ -19,7 +19,7 @@ return out;
 }
 
 /*** R
-X <- matrix(rnorm(5*5),5,5)
-out<- svdC(X)
-str(out)
+#X <- matrix(rnorm(5*5),5,5)
+#out<- svdC(X)
+#str(out)
 */

@@ -6,7 +6,7 @@
 #' @author Angela Andreella
 #' @return Returns list of matrices
 #' @export
-#' @import diffusionMap epsilonCompute 
+#' @importFrom diffusionMap epsilonCompute 
 #' 
 #' 
 
