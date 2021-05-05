@@ -2,7 +2,7 @@
 #' @description perform functional alignment by von Mises Fisher Procrustes model
 #' @usage vMFP(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
 #' @param X data, i.e., list of matrices with dimension time points - voxels 
-#' @param Q maximum number of iteration
+#' @param Q value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.
 #' @param k value of the concentration parameter of the prior distribution
 #' @param ref_ds starting matrix to align
 #' @param scaling Flag to apply scaling transformation
@@ -12,7 +12,7 @@
 #' @export 
 #' @importFrom rARPACK svds
 #' @importFrom Matrix Diagonal
-#' 
+
 vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   
   nc <- dim(X)[1]
@@ -21,9 +21,9 @@ vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   }
   #Put transposes to save memory.
   out <- svdC(t(t(ref_ds) %*% X + k * t(Q))) 
-  s <- out$d
-  U <- out$u
-  Vt <- t(out$v)
+  s <- out$S
+  U <- out$U
+  Vt <- t(out$V)
   if(!reflection){
     s_new <- Diagonal(n=length(s), x=1)
     s_new[nc,nc] <- sign(det(U %*% Vt))

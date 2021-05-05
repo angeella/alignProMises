@@ -9,7 +9,7 @@ vMFP(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
 \arguments{
 \item{X}{data, i.e., list of matrices with dimension time points - voxels}
 
-\item{Q}{maximum number of iteration}
+\item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.}
 
 \item{k}{value of the concentration parameter of the prior distribution}
 
