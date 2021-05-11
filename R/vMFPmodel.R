@@ -61,9 +61,10 @@ vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, s
     Xest = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$Xest,simplify = F)), dim = dim(X))
     R = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$R,simplify = F)), dim = c(col,col,nsubj))
     ref_ds_old = ref_ds
-    ref_ds = aaply(Xest, c(1,2), mean)
+    # ref_ds = aaply(Xest, c(1,2), mean)
+    ref_ds <- colMeans(aperm(Xest, c(3, 1, 2)))
     dist[count] <- norm(ref_ds-ref_ds_old,type="F")
   }
 
   return(list(Xest = Xest, R = R, dist = dist, count = count))
-  }
+}
