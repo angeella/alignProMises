@@ -15,15 +15,5 @@ for (sid in 1:length(sub_ids)) {
 data <- img
 data<- array(rnorm(23*23*5), dim = c(23,23,5))
 
-system.time(out <-vMFPmodel(data, maxIt = 1, t = 0.01, k = 1, scaling = TRUE, reflection = TRUE, subj = FALSE, centered = FALSE))
-system.time(out <-vMFPmodelLight(data, maxIt = 1, t = 1, k = 1, scaling = TRUE, reflection = TRUE, subj = FALSE, centered = FALSE))
+system.time(out <-vMFPmodel(data, maxIt = 100, t = 1, k = 1, scaling = TRUE, reflection = TRUE, subj = FALSE, centered = FALSE))
 
-library(geomorph)
-dati<- array(rnorm(23*23*5), dim = c(23,23,5))
-
-Y.gpa <- gpagen(data, PrinAxes = FALSE)
-
-library(vMFPmodelR)
-Y.gpa <- vMFPmodel(data = dati, maxIt = 1, t = 0.001, k = 0, 
-                   scaling = TRUE, reflection = TRUE, 
-                   subj = FALSE, centered = TRUE)

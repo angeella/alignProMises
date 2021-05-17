@@ -1,7 +1,7 @@
 #' @title von Mises Fisher Procrustes model
 #' @description perform the functional alignment using the von Mises Fisher Procrustes model
 #' @usage vMFPmodel(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F)
-#' @param data data, i.e., array of matrices with dimension time points - voxels 
+#' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels
 #' @param maxIt maximum number of iteration
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
 #' @param k value of the concentration parameter of the prior distribution
@@ -19,7 +19,10 @@
 #' @importFrom foreach %dopar%
 
 vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T){
-  if(!is.array(data)){warnings("Please insert an array of matrices with dimension time points - voxels")}
+  if(!is.array(data) & !is.list(data)){warnings("Please insert an array or a list of matrices with dimension time points - voxels")}
+  if (is.list(data))
+    data <- array(as.numeric(unlist(data)), dim=c(nrow(data[[1]]), ncol(data[[1]]), length(data)))
+  
   row <- dim(data)[1] 
   col <- dim(data)[2] 
   nsubj <- dim(data)[3]

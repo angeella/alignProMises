@@ -7,7 +7,7 @@
 vMFPmodel(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F)
 }
 \arguments{
-\item{data}{data, i.e., array of matrices with dimension time points - voxels}
+\item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}
 
 \item{maxIt}{maximum number of iteration}
 
