@@ -3,6 +3,7 @@
 export(kCalibrate)
 export(vMFP)
 export(vMFPmodel)
+export(vMFPmodelLight)
 importFrom(Matrix,Diagonal)
 importFrom(diffusionMap,epsilonCompute)
 importFrom(foreach,"%dopar%")

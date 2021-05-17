@@ -13,7 +13,7 @@
 kCalibrate <- function(D, p){
   
   eps <- epsilonCompute(D, p = p)
-  kQ <- exp(D*(1-1/eps))
-    
+  #kQ <- exp(D*(1-1/eps)) %*% solve(exp(-D))
+  kQ <- exp(-D/eps) 
   return(kQ)  
 }
