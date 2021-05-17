@@ -35,9 +35,9 @@ vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   }
   R = Tr
   if(!scaling){
-      Xest <- X %*% t(R)
+      Xest <- X %*% R
   }else{
-      Xest <- X %*% t(R) * scale
+      Xest <- X %*% R * scale
   }
   
   return(list(Xest = Xest, R = R))

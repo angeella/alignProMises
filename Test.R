@@ -16,4 +16,4 @@ data <- img
 data<- array(rnorm(23*23*5), dim = c(23,23,5))
 
 system.time(out <-vMFPmodel(data, maxIt = 100, t = 1, k = 1, scaling = TRUE, reflection = TRUE, subj = FALSE, centered = FALSE))
-out$dist
+
