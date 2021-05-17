@@ -1,6 +1,6 @@
 
 require(ARIpermutation)
-require(vMFPmodel)
+require(vMFPmodelR)
 
 mask_STG <- RNifti::readNifti("C:/Users/Angela Andreella/Documents/Thesis_Doc/Hyperaligment/Computation/AuditoryData/Pvalues/STG/mask_Superior_Temporal_Gyrus.nii.gz")
 sub_ids <- sapply(c(21:24),function(x) paste0(0,x))
@@ -15,5 +15,5 @@ for (sid in 1:length(sub_ids)) {
 data <- img
 data<- array(rnorm(23*23*5), dim = c(23,23,5))
 
-system.time(out <-vMFPmodel(data, maxIt = 100, t = 1, k = 1, scaling = TRUE, reflection = TRUE, subj = FALSE, centered = FALSE))
+system.time(out <-vMFPmodel(data, maxIt = 2, t = 1, k = 1, scaling = TRUE, reflection = TRUE, subj = FALSE, centered = FALSE))
 
