@@ -2,20 +2,20 @@
 % Please edit documentation in R/kCalibrate.R
 \name{kCalibrate}
 \alias{kCalibrate}
-\title{von Mises Fisher Procrustes model}
+\title{Calibrate parameters}
 \usage{
-kCalibrate(data)
+kCalibrate(D, p = 0.01)
 }
 \arguments{
-\item{D}{squared euclidean distance matrix}
+\item{D}{squared euclidean distance matrix between the coordinates of the voxels}
 
-\item{p}{distances to compute bandwith value}
+\item{p}{distances to compute bandwith value. Default value is 0.01}
 }
 \value{
-Returns list of matrices
+Returns directly \code{k*Q}, i.e. the product between the concentration parameter and the location matrix parameter of the prior distribution
 }
 \description{
-perform the functional alignment using the von Mises Fisher Procrustes model
+Calibrates the parameters of the von Mises-Fisher distribution to be used as prior in the von Mises-Fisher-Procrustes model.
 }
 \author{
 Angela Andreella and Daniela Corbetta

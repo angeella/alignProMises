@@ -7,23 +7,27 @@
 vMFP(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
 }
 \arguments{
-\item{X}{data, i.e., list of matrices with dimension time points - voxels}
+\item{X}{data, i.e., matrix with dimension time points - voxels}
 
 \item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.}
 
 \item{k}{value of the concentration parameter of the prior distribution}
 
-\item{ref_ds}{starting matrix to align}
+\item{kQ}{product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of \code{k} and \code{Q}}
+
+\item{ref_ds}{reference matrix to align}
 
 \item{scaling}{Flag to apply scaling transformation}
 
 \item{reflection}{Flag to apply reflection transformation}
 }
 \value{
-Returns list of matrices
+\code{vMFP} returns a list with two components:
+\item{\code{Xest}}{the aligned matrix}
+\item{\code{R}}{the rotation matrix}
 }
 \description{
-perform functional alignment by von Mises Fisher Procrustes model
+Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix
 }
 \author{
 Angela Andreella and Daniela Corbetta
