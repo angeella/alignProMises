@@ -11,7 +11,6 @@
 #' @return Returns list of matrices
 #' @export 
 #' @importFrom rARPACK svds
-#' @importFrom Matrix Diagonal
 
 vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   
@@ -25,10 +24,11 @@ vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   U <- out$U
   Vt <- t(out$V)
   if(!reflection){
-    s_new <- Diagonal(n=length(s), x=1)
+    s_new <- diag(length(s))
+   # s_new <- Diagonal(n = length(s), x = 1)
     s_new[nc,nc] <- sign(det(U %*% Vt))
     Tr <- (U %*% s_new) %*% Vt
-    scale <- sum(s_new * s)
+    scale <- sum(s_new %*% s)
   }else{
     Tr <-  U %*% Vt
     scale <-  sum(s)

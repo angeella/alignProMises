@@ -20,8 +20,9 @@
 
 vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T){
   if(!is.array(data) & !is.list(data)){warnings("Please insert an array or a list of matrices with dimension time points - voxels")}
-  if (is.list(data))
+  if(is.list(data)){
     data <- array(as.numeric(unlist(data)), dim=c(nrow(data[[1]]), ncol(data[[1]]), length(data)))
+  }
   
   row <- dim(data)[1] 
   col <- dim(data)[2] 
@@ -48,8 +49,8 @@ vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, s
   Xest <-  array(NA, dim(X))
   R <-  array(NA, c(col,col, nsubj))
 
-  while(dist[count] > t & count < maxIt){
-
+  while(dist[count] > t | count < maxIt){
+    
     out <-foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
        # GPASub(X[,,i], Q[,,i], k, ref_ds, scaling, reflection)
@@ -64,7 +65,7 @@ vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, s
     Xest = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$Xest,simplify = F)), dim = dim(X))
     R = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$R,simplify = F)), dim = c(col,col,nsubj))
     ref_ds_old = ref_ds
-    # ref_ds = aaply(Xest, c(1,2), mean)
+    #ref_ds = aaply(Xest, c(1,2), mean)
     ref_ds <- colMeans(aperm(Xest, c(3, 1, 2)))
     dist[count] <- norm(ref_ds-ref_ds_old,type="F")
   }
