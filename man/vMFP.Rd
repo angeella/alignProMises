@@ -26,5 +26,5 @@ Returns list of matrices
 perform functional alignment by von Mises Fisher Procrustes model
 }
 \author{
-Angela Andreella
+Angela Andreella and Daniela Corbetta
 }

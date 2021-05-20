@@ -34,5 +34,5 @@ Returns list of matrices
 perform the functional alignment using the von Mises Fisher Procrustes model
 }
 \author{
-Angela Andreella
+Angela Andreella and Daniela Corbetta
 }
