@@ -7,10 +7,13 @@
 #' @param ref_ds starting matrix to align
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
-#' @author Angela Andreella
+#' @author Angela Andreella and Daniela Corbetta
 #' @return Returns list of matrices
 #' @export 
 #' @importFrom rARPACK svds
+#' @useDynLib vMFPmodelR
+#' @importFrom Rcpp sourceCpp
+
 
 vMFP <- function(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE){
   

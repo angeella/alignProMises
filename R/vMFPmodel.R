@@ -11,7 +11,7 @@
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
 #' @param centered centered data?
-#' @author Angela Andreella
+#' @author Angela Andreella and Daniela Corbetta
 #' @return Returns list of matrices
 #' @export
 #' @importFrom plyr aaply 

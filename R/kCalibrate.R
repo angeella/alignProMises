@@ -3,7 +3,7 @@
 #' @usage kCalibrate(data)
 #' @param D squared euclidean distance matrix
 #' @param p distances to compute bandwith value
-#' @author Angela Andreella
+#' @author Angela Andreella and Daniela Corbetta
 #' @return Returns list of matrices
 #' @export
 #' @importFrom diffusionMap epsilonCompute 
