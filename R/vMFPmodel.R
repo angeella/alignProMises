@@ -67,7 +67,7 @@ vMFPmodel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, s
   Xest <-  array(NA, dim(X))
   R <-  array(NA, c(col,col, nsubj))
   
-  while(dist[count] > t | count < maxIt){
+  while(dist[count] > t & count < maxIt){
     
     out <-foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
