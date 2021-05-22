@@ -22,7 +22,8 @@
 
 vMFP <- function(X, Q = NULL, k, kQ = NULL, ref_ds, scaling = TRUE, reflection = TRUE){
   
-  nc <- dim(X)[1]
+  nc <- min(dim(X)[1:2])
+  #nc <- dim(X)[1]
   
   if(is.null(Q)){ Q <- matrix(0, nrow = nc, ncol = nc)
   }
