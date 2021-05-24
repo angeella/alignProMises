@@ -2,7 +2,7 @@
 #' @description Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
 #' @usage vMFPmodel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
 #'        ref_ds = NULL, scaling= T, reflection= T, 
-#'        subj= F, kCalibrate = F, D = NULL, p = 0.01)
+#'        subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01)
 #' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels
 #' @param maxIt maximum number of iterations
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
