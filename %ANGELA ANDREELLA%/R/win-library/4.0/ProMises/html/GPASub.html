@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: ProMises model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for GPASub {ProMises}"><tr><td>GPASub {ProMises}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>ProMises model</h2>
+
+<h3>Description</h3>
+
+<p>Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+GPASub(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>data, i.e., matrix with dimension time points - voxels</p>
+</td></tr>
+<tr valign="top"><td><code>Q</code></td>
+<td>
+<p>value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.</p>
+</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+<p>value of the concentration parameter of the prior distribution</p>
+</td></tr>
+<tr valign="top"><td><code>kQ</code></td>
+<td>
+<p>product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of <code>k</code> and <code>Q</code></p>
+</td></tr>
+<tr valign="top"><td><code>ref_ds</code></td>
+<td>
+<p>reference matrix to align</p>
+</td></tr>
+<tr valign="top"><td><code>scaling</code></td>
+<td>
+<p>Flag to apply scaling transformation</p>
+</td></tr>
+<tr valign="top"><td><code>reflection</code></td>
+<td>
+<p>Flag to apply reflection transformation</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>vMFP</code> returns a list with two components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code><code>Xest</code></code></td>
+<td>
+<p>the aligned matrix</p>
+</td></tr>
+<tr valign="top"><td><code><code>R</code></code></td>
+<td>
+<p>the rotation matrix</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Angela Andreella and Daniela Corbetta
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>ProMises</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

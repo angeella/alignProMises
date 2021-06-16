@@ -1,0 +1,11 @@
+Chainlink               Chainlink toy clustering data set
+adapreg                 Adaptive Regression
+adapreg.m               Adaptive Regression
+annulus                 Annulus toy data set
+diffuse                 Compute diffusion map coordinates from
+                        pair-wise distances.
+diffusionKmeans         Diffusion K-means
+distortionMin           Distortion Minimization via K-means
+epsilonCompute          Compute default diffusion map epsilon.
+nystrom                 Perform Nystrom Extension to estimate diffusion
+                        coordinates of data.

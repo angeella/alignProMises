@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Efficient ProMises model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for EfficientProMises {ProMises}"><tr><td>EfficientProMises {ProMises}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Efficient ProMises model</h2>
+
+<h3>Description</h3>
+
+<p>perform the functional alignment using the von Mises Fisher Procrustes model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+vMFPmodelLight(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>data, i.e., array of matrices with dimension time points - voxels</p>
+</td></tr>
+<tr valign="top"><td><code>maxIt</code></td>
+<td>
+<p>maximum number of iteration</p>
+</td></tr>
+<tr valign="top"><td><code>t</code></td>
+<td>
+<p>the threshold value to be reached as the minimum relative reduction between the matrices</p>
+</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+<p>value of the concentration parameter of the prior distribution</p>
+</td></tr>
+<tr valign="top"><td><code>Q</code></td>
+<td>
+<p>value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.</p>
+</td></tr>
+<tr valign="top"><td><code>ref_ds</code></td>
+<td>
+<p>starting matrix to align</p>
+</td></tr>
+<tr valign="top"><td><code>scaling</code></td>
+<td>
+<p>Flag to apply scaling transformation</p>
+</td></tr>
+<tr valign="top"><td><code>reflection</code></td>
+<td>
+<p>Flag to apply reflection transformation</p>
+</td></tr>
+<tr valign="top"><td><code>subj</code></td>
+<td>
+<p>Flag if each subject has his/her own set of voxel after voxel selection step</p>
+</td></tr>
+<tr valign="top"><td><code>centered</code></td>
+<td>
+<p>centered data?</p>
+</td></tr>
+<tr valign="top"><td><code>coord</code></td>
+<td>
+<p>3-dim coordinates of the variabiles</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns list of matrices
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Angela Andreella
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>ProMises</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

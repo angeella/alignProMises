@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: ProMises model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ProMisesModel {ProMises}"><tr><td>ProMisesModel {ProMises}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>ProMises model</h2>
+
+<h3>Description</h3>
+
+<p>Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
+       ref_ds = NULL, scaling= T, reflection= T, 
+       subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels</p>
+</td></tr>
+<tr valign="top"><td><code>maxIt</code></td>
+<td>
+<p>maximum number of iterations</p>
+</td></tr>
+<tr valign="top"><td><code>t</code></td>
+<td>
+<p>the threshold value to be reached as the minimum relative reduction between the matrices</p>
+</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+<p>value of the concentration parameter of the prior distribution</p>
+</td></tr>
+<tr valign="top"><td><code>Q</code></td>
+<td>
+<p>value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.</p>
+</td></tr>
+<tr valign="top"><td><code>ref_ds</code></td>
+<td>
+<p>starting reference matrix to align. If <code>NULL</code>, at the first iteration it is set equal to the element-wise mean of the data matrices</p>
+</td></tr>
+<tr valign="top"><td><code>scaling</code></td>
+<td>
+<p>Flag to apply scaling transformation</p>
+</td></tr>
+<tr valign="top"><td><code>reflection</code></td>
+<td>
+<p>Flag to apply reflection transformation</p>
+</td></tr>
+<tr valign="top"><td><code>subj</code></td>
+<td>
+<p>Flag if each subject has his/her own set of voxel after voxel selection step</p>
+</td></tr>
+<tr valign="top"><td><code>centered</code></td>
+<td>
+<p>if <code>TRUE</code>, data matrices are centered before the algorithm starts</p>
+</td></tr>
+<tr valign="top"><td><code>kCalibrate</code></td>
+<td>
+<p>if <code>TRUE</code>, the parameters of the prior distribution are computed with the function <code>kCalibrate</code></p>
+</td></tr>
+<tr valign="top"><td><code>D</code></td>
+<td>
+<p>squared euclidean distance matrix between the coordinates of the voxels. Necessary only when <code>kCalibrate = TRUE</code></p>
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+<p>distances to compute bandwith value for the <code>kCalibrate</code> function. Default value is 0.01</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>vMFPmodel</code> returns a list with four components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code><code>Xest</code></code></td>
+<td>
+<p>an array with the aligned matrices</p>
+</td></tr>
+<tr valign="top"><td><code><code>R</code></code></td>
+<td>
+<p>an array with the rotation matrices</p>
+</td></tr>
+<tr valign="top"><td><code><code>dist</code></code></td>
+<td>
+<p>a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one</p>
+</td></tr>
+<tr valign="top"><td><code><code>count</code></code></td>
+<td>
+<p>the number of iterations done by the algorithm</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Angela Andreella and Daniela Corbetta
+</p>
+
+
+<h3>References</h3>
+
+<p>For the theory on the von Mises-Fisher-Procrustes model see: A. Andreella and L. Finos
+(2020), The von Mises-Fisher Procrustes model in functional Magnetic Resonance Imaging data, 
+arXiv: 2008.04631
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>ProMises</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
