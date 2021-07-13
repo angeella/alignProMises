@@ -1,5 +1,8 @@
 # ProMises: Procrustes von Mises-Fisher model in R
  
+ [![DOI](https://zenodo.org/badge/290147620.svg)](https://zenodo.org/badge/latestdoi/290147620)
+
+ 
 ## Installation
 
 You can install the released version of ProMises with:
