@@ -1,4 +1,4 @@
-# ProMises model
+# ProMises: Procrustes von Mises-Fisher model in R
  
 ## Installation
 
