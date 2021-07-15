@@ -6,7 +6,8 @@
 \usage{
 ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
        ref_ds = NULL, scaling= T, reflection= T, 
-       subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01)
+       subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
+       ind = 2)
 }
 \arguments{
 \item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}
@@ -34,13 +35,18 @@ ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL,
 \item{D}{squared euclidean distance matrix between the coordinates of the voxels. Necessary only when \code{kCalibrate = TRUE}}
 
 \item{p}{distances to compute bandwith value for the \code{kCalibrate} function. Default value is 0.01}
+
+\item{ind}{(only required in the case with two matrices) the index of the matrix to be used as reference, must be 1 or 2}
 }
 \value{
-\code{vMFPmodel} returns a list with four components:
+In the case with more than two matrices, \code{ProMisesModel} returns a list with four components:
 \item{\code{Xest}}{an array with the aligned matrices}
 \item{\code{R}}{an array with the rotation matrices}
 \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
 \item{\code{count}}{the number of iterations done by the algorithm}
+In the case with only two matrices, \code{ProMisesModel} returns a list with two components:
+\item{\code{Xest}}{the aligned matrix}
+\item{\code{R}}{the rotation matrix}
 }
 \description{
 Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix

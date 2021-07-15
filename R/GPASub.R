@@ -8,6 +8,7 @@
 #' @param ref_ds reference matrix to align
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
+#' @param centered centered data?
 #' @author Angela Andreella and Daniela Corbetta
 #' @return \code{vMFP} returns a list with two components:
 #' \item{\code{Xest}}{the aligned matrix}
@@ -20,7 +21,7 @@
 
 
 
-GPASub <- function(X, Q = NULL, k, kQ = NULL, ref_ds, scaling = TRUE, reflection = TRUE){
+GPASub <- function(X, Q = NULL, k, kQ = NULL, ref_ds, scaling = TRUE, reflection = TRUE, centered = TRUE){
   
   nc <- min(dim(X)[1:2])
   #nc <- dim(X)[1]
@@ -48,6 +49,9 @@ GPASub <- function(X, Q = NULL, k, kQ = NULL, ref_ds, scaling = TRUE, reflection
     scale <-  sum(s)
   }
   R = Tr
+  if(!centered){
+    scale <- scale / norm(X %*% R, type = "F")
+  }
   if(!scaling){
     Xest <- X %*% R
   }else{
