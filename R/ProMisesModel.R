@@ -54,13 +54,13 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
   if(centered){
     datas_centered <- aaply(data, 3, function(x) x - M)
     X <- aaply(datas_centered, 1, function(x) x/norm(x,type="F"))
-    X<-aperm(X,c(2,3,1))
+    X <- aperm(X,c(2,3,1))
   }else{
     X<- data
   }
   if(is.null(Q)){ Q <- matrix(0, nrow = col, ncol = col)
   }
-  if(is.null(ref_ds)){
+  if(is.null(ref_ds) & nsubj != 2){
     ref_ds <- M
   }
   if(kCalibrate){
@@ -71,10 +71,10 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
   }
   
   # 2 images: explicit solution
-  if (nsubj == 2){
+  if (nsubj == 2 & is.null(ref_ds)){
     if(ind != 1 & ind != 2){warnings("ind must be 1 or 2")}
     ref_ds <- X[,,ind]
-    out <- ProMises::GPASub(X[,,-ind], Q, k, kQ, ref_ds, scaling, reflection) 
+    out <- ProMises::GPASub(X[,,-ind], Q, k, kQ, ref_ds, scaling, reflection, centered) 
     return(list(Xest = out$Xest, R = out$R))
   }
   
@@ -88,10 +88,10 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
     out <-foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
         # GPASub(X[,,i], Q[,,i], k, ref_ds, scaling, reflection)
-        ProMises::GPASub(X[,,i], Q[,,i], k, kQ, ref_ds, scaling, reflection)
+        ProMises::GPASub(X[,,i], Q[,,i], k, kQ, ref_ds, scaling, reflection, centered)
       }else{
         #  GPASub(X[,,i], Q, k, ref_ds, scaling, reflection) 
-        ProMises::GPASub(X[,,i], Q, k, kQ, ref_ds, scaling, reflection) 
+        ProMises::GPASub(X[,,i], Q, k, kQ, ref_ds, scaling, reflection, centered) 
       }
       
     }
