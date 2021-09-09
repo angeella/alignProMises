@@ -10,9 +10,9 @@
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
-#' @param centered centered data?
+#' @param centered center data?
 #' @param coord 3-dim coordinates of the variabiles
-#' @author Angela Andreella
+#' @author Angela Andreella and Daniela Corbetta
 #' @return Returns list of matrices
 #' @export
 #' @importFrom plyr aaply 
@@ -32,31 +32,40 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   dist = vector()
   dist[1] <- Inf
   
-  M <- aaply(data, c(1,2), mean)
+  # M <- aaply(data, c(1,2), mean)
+  M <- colMeans(aperm(data, c(3, 1, 2)))
   if(centered){
     datas_centered <- aaply(data, 3, function(x) x - M)
     X <- aaply(datas_centered, 1, function(x) x/norm(x,type="F"))
-    X<-aperm(X,c(2,3,1))
+    X <- aperm(X,c(2,3,1))
   }else{
-    X<- data
+    X <- data
   }
-  if(is.null(Q)){ Q <- matrix(0, nrow = col, ncol = col)
+  if(is.null(Q)){ 
+    Q <- matrix(0, nrow = col, ncol = col)
   }
   
   if(is.null(ref_ds)){
-    ref_ds <- M
+    ref_ds <- M # mxn
   }
-  while(dist[count] > t | count < maxIt){
-    Xest <-  array(NA, dim(X))
+  
+  out <- svds(ref_ds, k = nrow(ref_ds))
+  V <- out$v
+  Xstar <- array(NA, dim=c(nrow(X), ncol(V), nsubj))
+  Xstar[] <- apply(X, 3, function(x) x%*%V)
+  ref_ds <- ref_ds %*% V
+  
+  while(dist[count] > t & count < maxIt){
+    
+    Xest <-  array(NA, dim(Xstar))
     R <-  array(NA, c(col,col, nsubj))
     
-    
-    out <-foreach(i = c(1:nsubj)) %dopar% {
-      out <- svds(ref_ds, k = nrow(ref_ds)) 
-      V <- out$v
-      Xest <- X[,,i] %*% V
+    out <- foreach(i = c(1:nsubj)) %dopar% {
+      # out <- svds(ref_ds, k = nrow(ref_ds)) 
+      # V <- out$v
+      # Xest <- X[,,i] %*% V
       if(subj){
-
+        
         if(!is.null(coord)){
           coord_star <- t(V) %*% coord
           D = dist(coord_star, method = "euclidean")
@@ -64,9 +73,12 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
         }else{
           Q[,,i] <- matrix(0, nrow = row, ncol = row)
         }
-
-        vMFP(X[,,i], k, Q[,,i], ref_ds, scaling, reflection)
-      }else{
+        
+        ProMises::GPASub(Xstar[,,i], Q[,,i], k, kQ = NULL, ref_ds, scaling, reflection, centered)
+        #vMFP(X[,,i], k, Q[,,i], ref_ds, scaling, reflection)
+      }
+      
+      else{
         if(!is.null(coord)){
           coord_star <- t(V) %*% coord
           D = dist(coord_star, method = "euclidean")
@@ -74,19 +86,26 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
         }else{
           Q <- matrix(0, nrow = row, ncol = row)
         }
-        vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 
+        ProMises::GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling=F, reflection=F, centered=F)
+        #vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 
       }
       
     }
     count <- count + 1 
-    Xest = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$Xest,simplify = F)), dim = dim(X))
+    Xest = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$Xest,simplify = F)), dim = dim(Xstar))
     R = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$R,simplify = F)), dim = c(col,col,nsubj))
     ref_ds_old = ref_ds
-    ref_ds = aaply(Xest, c(1,2), mean)
-    dist[count] <- norm(ref_ds-ref_ds_old,type="F")
+    # ref_ds = aaply(Xest, c(1,2), mean)
+    ref_ds <- colMeans(aperm(Xest, c(3, 1, 2)))
+    dist[count] <- norm(ref_ds-ref_ds_old, type="F")
   }
   
-  Xest = sapply(c(1:nsubj), function(x) Xest[x] %*% V)
+  Xest1 <- array(NA, c(row, col, nsubj))
+  for (i in 1:nsubj) Xest1[,,i] <- Xest[,,i] %*% t(V)
   
   return(list(Xest = Xest, R = R, dist = dist, count = count))
 }
+
+#X <- array(X, dim=c(10,100,3))
+#out1 <- EfficientProMises(X, centered=F, scaling=F)
+#out <- ProMisesModel(X, centered=F, scaling=F, maxIt = 100)
