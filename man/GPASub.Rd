@@ -20,6 +20,8 @@ GPASub(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
 \item{scaling}{Flag to apply scaling transformation}
 
 \item{reflection}{Flag to apply reflection transformation}
+
+\item{centered}{centered data?}
 }
 \value{
 \code{vMFP} returns a list with two components:

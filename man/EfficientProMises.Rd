@@ -4,10 +4,10 @@
 \alias{EfficientProMises}
 \title{Efficient ProMises model}
 \usage{
-vMFPmodelLight(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
+EfficientProMises(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
 }
 \arguments{
-\item{data}{data, i.e., array of matrices with dimension time points - voxels}
+\item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}
 
 \item{maxIt}{maximum number of iteration}
 
@@ -25,16 +25,20 @@ vMFPmodelLight(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= 
 
 \item{subj}{Flag if each subject has his/her own set of voxel after voxel selection step}
 
-\item{centered}{centered data?}
+\item{centered}{center data?}
 
 \item{coord}{3-dim coordinates of the variabiles}
 }
 \value{
-Returns list of matrices
+\code{EfficientProMises} returns a list with four components:
+\item{\code{Xest}}{an array with the aligned matrices}
+\item{\code{R}}{an array with the rotation matrices}
+\item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
+\item{\code{count}}{the number of iterations done by the algorithm}
 }
 \description{
-perform the functional alignment using the von Mises Fisher Procrustes model
+Performs the functional alignment using the light version of the von Mises Fisher Procrustes model
 }
 \author{
-Angela Andreella
+Angela Andreella and Daniela Corbetta
 }

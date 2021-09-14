@@ -1,7 +1,7 @@
 #' @title Efficient ProMises model
-#' @description perform the functional alignment using the von Mises Fisher Procrustes model
-#' @usage vMFPmodelLight(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
-#' @param data data, i.e., array of matrices with dimension time points - voxels 
+#' @description Performs the functional alignment using the light version of the von Mises Fisher Procrustes model
+#' @usage EfficientProMises(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
+#' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels 
 #' @param maxIt maximum number of iteration
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
 #' @param k value of the concentration parameter of the prior distribution
@@ -13,7 +13,11 @@
 #' @param centered center data?
 #' @param coord 3-dim coordinates of the variabiles
 #' @author Angela Andreella and Daniela Corbetta
-#' @return Returns list of matrices
+#' @return \code{EfficientProMises} returns a list with four components:
+#' \item{\code{Xest}}{an array with the aligned matrices}
+#' \item{\code{R}}{an array with the rotation matrices}
+#' \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
+#' \item{\code{count}}{the number of iterations done by the algorithm}
 #' @export
 #' @importFrom plyr aaply 
 #' @importFrom foreach foreach
@@ -22,7 +26,11 @@
 
 EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL){
   
-  if(!is.array(data)){warnings("Please insert an array of matrices with dimension time points - voxels")}
+  if(!is.array(data) & !is.list(data)){warnings("Please insert an array or a list of matrices with dimension time points - voxels")}
+  if(is.list(data)){
+    data <- array(as.numeric(unlist(data)), dim=c(nrow(data[[1]]), ncol(data[[1]]), length(data)))
+  }
+  
   
   row <- dim(data)[1] 
   col <- dim(data)[2] 
@@ -105,7 +113,3 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   
   return(list(Xest = Xest, R = R, dist = dist, count = count))
 }
-
-#X <- array(X, dim=c(10,100,3))
-#out1 <- EfficientProMises(X, centered=F, scaling=F)
-#out <- ProMisesModel(X, centered=F, scaling=F, maxIt = 100)
