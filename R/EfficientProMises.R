@@ -5,7 +5,7 @@
 #' @param maxIt maximum number of iteration
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
 #' @param k value of the concentration parameter of the prior distribution
-#' @param Q value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.
+#' @param Q value of the location parameter of the prior distribution. It has dimension time-points x time-points, it could be not symmetric.
 #' @param ref_ds starting matrix to align
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
@@ -49,9 +49,6 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   }else{
     X <- data
   }
-  if(is.null(Q)){ 
-    Q <- matrix(0, nrow = col, ncol = col)
-  }
   
   if(is.null(ref_ds)){
     ref_ds <- M # mxn
@@ -63,6 +60,8 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   Xstar[] <- apply(X, 3, function(x) x%*%V)
   ref_ds <- ref_ds %*% V
   
+  
+  
   while(dist[count] > t & count < maxIt){
     
     Xest <-  array(NA, dim(Xstar))
@@ -73,7 +72,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
       # V <- out$v
       # Xest <- X[,,i] %*% V
       if(subj){
-        
+       if(is.null(Q)){
         if(!is.null(coord)){
           coord_star <- t(V) %*% coord
           D = dist(coord_star, method = "euclidean")
@@ -81,18 +80,21 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
         }else{
           Q[,,i] <- matrix(0, nrow = row, ncol = row)
         }
+      }
         
         ProMises::GPASub(Xstar[,,i], Q[,,i], k, kQ = NULL, ref_ds, scaling, reflection, centered)
         #vMFP(X[,,i], k, Q[,,i], ref_ds, scaling, reflection)
       }
       
       else{
-        if(!is.null(coord)){
-          coord_star <- t(V) %*% coord
-          D = dist(coord_star, method = "euclidean")
-          Q <- exp(-D)
-        }else{
-          Q <- matrix(0, nrow = row, ncol = row)
+        if(is.null(Q)){
+         if(!is.null(coord)){
+           coord_star <- t(V) %*% coord
+           D = dist(coord_star, method = "euclidean")
+           Q <- exp(-D)
+         }else{
+           Q <- matrix(0, nrow = row, ncol = row)
+         }
         }
         ProMises::GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling=F, reflection=F, centered=F)
         #vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 

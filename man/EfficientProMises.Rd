@@ -15,7 +15,7 @@ EfficientProMises(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scalin
 
 \item{k}{value of the concentration parameter of the prior distribution}
 
-\item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.}
+\item{Q}{value of the location parameter of the prior distribution. It has dimension time-points x time-points, it could be not symmetric.}
 
 \item{ref_ds}{starting matrix to align}
 
