@@ -111,5 +111,5 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   Xest1 <- array(NA, c(row, col, nsubj))
   for (i in 1:nsubj) Xest1[,,i] <- Xest[,,i] %*% t(V)
   
-  return(list(Xest = Xest, R = R, dist = dist, count = count))
+  return(list(Xest = Xest1, R = R, dist = dist, count = count))
 }

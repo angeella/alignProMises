@@ -45,8 +45,8 @@ In the case with more than two matrices, \code{ProMisesModel} returns a list wit
 \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
 \item{\code{count}}{the number of iterations done by the algorithm}
 In the case with only two matrices, \code{ProMisesModel} returns a list with two components:
-\item{\code{Xest}}{the aligned matrix}
-\item{\code{R}}{the rotation matrix}
+\item{\code{Xest}}{an array with the aligned matrices}
+\item{\code{R}}{an array with the rotation matrices (one is the identity)}
 }
 \description{
 Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
