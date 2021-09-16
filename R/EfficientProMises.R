@@ -51,12 +51,13 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   }
   
   if(is.null(ref_ds)){
-    ref_ds <- M # mxn
+    ref_ds <- M 
   }
   
   out <- svds(ref_ds, k = nrow(ref_ds))
-  V <- out$v
+  V <- out$v 
   Xstar <- array(NA, dim=c(nrow(X), ncol(V), nsubj))
+  
   Xstar[] <- apply(X, 3, function(x) x%*%V)
   ref_ds <- ref_ds %*% V
   
@@ -96,7 +97,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
            Q <- matrix(0, nrow = row, ncol = row)
          }
         }
-        ProMises::GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling=F, reflection=F, centered=F)
+        ProMises::GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling, reflection, centered)
         #vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 
       }
       
