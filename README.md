@@ -1,14 +1,14 @@
-# ProMises: Procrustes von Mises-Fisher model in R
+# alignProMises: Alignment by the Procrustes von Mises-Fisher model in R
  
  [![DOI](https://zenodo.org/badge/290147620.svg)](https://zenodo.org/badge/latestdoi/290147620)
 
  
 ## Installation
 
-You can install the released version of ProMises with:
+You can install the released version of alignProMises with:
 
 ``` r
-devtools::install_github("angeella/ProMises")
+devtools::install_github("angeella/alignProMises")
 ``` 
  
 ## Example 
