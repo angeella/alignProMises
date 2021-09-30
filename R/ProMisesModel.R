@@ -1,9 +1,9 @@
 #' @title ProMises model
 #' @description Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
 #' @usage ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
-#'        ref_ds = NULL, scaling= T, reflection= T, 
-#'        subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
-#'        ind = 2)
+#' ref_ds = NULL, scaling= T, reflection= T, 
+#' subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
+#' ind = 2)
 #' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels
 #' @param maxIt maximum number of iterations
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
@@ -28,8 +28,8 @@
 #' \item{\code{Xest}}{an array with the aligned matrices}
 #' \item{\code{R}}{an array with the rotation matrices (one is the identity)}
 #' @references For the theory on the von Mises-Fisher-Procrustes model see: A. Andreella and L. Finos
-#' (2020), The von Mises-Fisher Procrustes model in functional Magnetic Resonance Imaging data, 
-#' arXiv: 2008.04631
+#' (2021), Procrustes analysis for high-dimensional data, 
+#' 	arXiv:2008.04631 
 #' @export
 #' @importFrom plyr aaply 
 #' @importFrom foreach foreach
@@ -74,7 +74,7 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
   if (nsubj == 2 & is.null(ref_ds)){
     if(ind != 1 & ind != 2){warnings("ind must be 1 or 2")}
     ref_ds <- X[,,ind]
-    out <- ProMises::GPASub(X[,,-ind], Q, k, kQ, ref_ds, scaling, reflection, centered)
+    out <- GPASub(X[,,-ind], Q, k, kQ, ref_ds, scaling, reflection, centered)
     Xest <- array(NA, dim = dim(X))
     Xest[,,ind] <- data[,,ind]
     Xest[,,-ind] <- out$Xest
@@ -94,10 +94,10 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
     out <-foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
         # GPASub(X[,,i], Q[,,i], k, ref_ds, scaling, reflection)
-        ProMises::GPASub(X[,,i], Q[,,i], k, kQ, ref_ds, scaling, reflection, centered)
+        GPASub(X[,,i], Q[,,i], k, kQ, ref_ds, scaling, reflection, centered)
       }else{
         #  GPASub(X[,,i], Q, k, ref_ds, scaling, reflection) 
-        ProMises::GPASub(X[,,i], Q, k, kQ, ref_ds, scaling, reflection, centered) 
+        GPASub(X[,,i], Q, k, kQ, ref_ds, scaling, reflection, centered) 
       }
       
     }

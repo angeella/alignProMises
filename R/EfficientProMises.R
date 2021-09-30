@@ -1,6 +1,7 @@
 #' @title Efficient ProMises model
 #' @description Performs the functional alignment using the light version of the von Mises Fisher Procrustes model
-#' @usage EfficientProMises(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
+#' @usage EfficientProMises(data, maxIt=10, t =.001, k = 0, Q = NULL, 
+#' ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
 #' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels 
 #' @param maxIt maximum number of iteration
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
@@ -83,7 +84,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
         }
       }
         
-        ProMises::GPASub(Xstar[,,i], Q[,,i], k, kQ = NULL, ref_ds, scaling, reflection, centered)
+        GPASub(Xstar[,,i], Q[,,i], k, kQ = NULL, ref_ds, scaling, reflection, centered)
         #vMFP(X[,,i], k, Q[,,i], ref_ds, scaling, reflection)
       }
       
@@ -97,7 +98,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
            Q <- matrix(0, nrow = row, ncol = row)
          }
         }
-        ProMises::GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling, reflection, centered)
+        GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling, reflection, centered)
         #vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 
       }
       

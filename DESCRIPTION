@@ -1,11 +1,11 @@
-Package: ProMises
+Package: alignProMises
 Type: Package
-Title: What the package does (short line)
+Title: Functional alignment by ProMises (Procrustes von Mises) model.
 Version: 1.0
 Date: 2020-08-24
-Author: Who wrote it
-Maintainer: Angela Andreella <angela.andreella@phd.unipd.it>
-Description: More about what it does (maybe more than one line)
+Author: Angela Andreella and Daniela Corbetta.
+Maintainer: Angela Andreella <angela.andreella@unipd.it>
+Description: More about what it does (maybe more than one line).More about what it does (maybe more than one line).More about what it does (maybe more than one line).
 License: GPL (>= 2)
 Imports: 
   Rcpp (>= 1.0.3),
@@ -17,9 +17,7 @@ Imports:
   plyr
 LinkingTo: 
   Rcpp, 
-  RcppArmadillo, 
-  plyr, 
-  foreach
+  RcppArmadillo
 Suggests: 
     knitr,
     rmarkdown 

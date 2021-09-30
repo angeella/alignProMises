@@ -4,7 +4,8 @@
 \alias{EfficientProMises}
 \title{Efficient ProMises model}
 \usage{
-EfficientProMises(data, maxIt=10, t=.001, k = 0, Q = NULL, ref_ds = NULL, scaling= T, reflection= T, subj= F, coord = NULL)
+EfficientProMises(data, maxIt=10, t =.001, k = 0, Q = NULL, 
+ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
 }
 \arguments{
 \item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}

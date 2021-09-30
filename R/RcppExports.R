@@ -2,10 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 ProMises <- function(X, k, Q, ref_ds, scaling, reflection) {
-    .Call('_ProMises_ProMises', PACKAGE = 'ProMises', X, k, Q, ref_ds, scaling, reflection)
+    .Call('_alignProMises_ProMises', PACKAGE = 'alignProMises', X, k, Q, ref_ds, scaling, reflection)
 }
 
 svdC <- function(X) {
-    .Call('_ProMises_svdC', PACKAGE = 'ProMises', X)
+    .Call('_alignProMises_svdC', PACKAGE = 'alignProMises', X)
 }
 

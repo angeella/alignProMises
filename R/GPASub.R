@@ -1,6 +1,7 @@
 #' @title ProMises model
 #' @description Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix
-#' @usage GPASub(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
+#' @usage GPASub(X, Q = NULL, k, kQ = NULL, ref_ds, 
+#' scaling = TRUE, reflection = TRUE, centered = TRUE)
 #' @param X data, i.e., matrix with dimension time points - voxels 
 #' @param Q value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.
 #' @param k value of the concentration parameter of the prior distribution

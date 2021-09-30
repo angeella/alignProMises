@@ -5,9 +5,9 @@
 \title{ProMises model}
 \usage{
 ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
-       ref_ds = NULL, scaling= T, reflection= T, 
-       subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
-       ind = 2)
+ref_ds = NULL, scaling= T, reflection= T, 
+subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
+ind = 2)
 }
 \arguments{
 \item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}
@@ -53,8 +53,8 @@ Performs the functional alignment using the von Mises Fisher Procrustes model wi
 }
 \references{
 For the theory on the von Mises-Fisher-Procrustes model see: A. Andreella and L. Finos
-(2020), The von Mises-Fisher Procrustes model in functional Magnetic Resonance Imaging data, 
-arXiv: 2008.04631
+(2021), Procrustes analysis for high-dimensional data, 
+	arXiv:2008.04631
 }
 \author{
 Angela Andreella and Daniela Corbetta

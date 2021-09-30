@@ -13,7 +13,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // ProMises
 List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection);
-RcppExport SEXP _ProMises_ProMises(SEXP XSEXP, SEXP kSEXP, SEXP QSEXP, SEXP ref_dsSEXP, SEXP scalingSEXP, SEXP reflectionSEXP) {
+RcppExport SEXP _alignProMises_ProMises(SEXP XSEXP, SEXP kSEXP, SEXP QSEXP, SEXP ref_dsSEXP, SEXP scalingSEXP, SEXP reflectionSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -29,7 +29,7 @@ END_RCPP
 }
 // svdC
 List svdC(arma::mat X);
-RcppExport SEXP _ProMises_svdC(SEXP XSEXP) {
+RcppExport SEXP _alignProMises_svdC(SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -40,12 +40,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ProMises_ProMises", (DL_FUNC) &_ProMises_ProMises, 6},
-    {"_ProMises_svdC", (DL_FUNC) &_ProMises_svdC, 1},
+    {"_alignProMises_ProMises", (DL_FUNC) &_alignProMises_ProMises, 6},
+    {"_alignProMises_svdC", (DL_FUNC) &_alignProMises_svdC, 1},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_ProMises(DllInfo *dll) {
+RcppExport void R_init_alignProMises(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

@@ -4,7 +4,8 @@
 \alias{GPASub}
 \title{ProMises model}
 \usage{
-GPASub(X, Q = NULL, k, ref_ds, scaling = TRUE, reflection = TRUE)
+GPASub(X, Q = NULL, k, kQ = NULL, ref_ds, 
+scaling = TRUE, reflection = TRUE, centered = TRUE)
 }
 \arguments{
 \item{X}{data, i.e., matrix with dimension time points - voxels}
