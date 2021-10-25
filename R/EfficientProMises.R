@@ -62,12 +62,11 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   Xstar[] <- apply(X, 3, function(x) x%*%V)
   ref_ds <- ref_ds %*% V
   
+  Xest <-  array(NA, dim(Xstar))
+  R <-  array(NA, c(col,col, nsubj))
   
   
   while(dist[count] > t & count < maxIt){
-    
-    Xest <-  array(NA, dim(Xstar))
-    R <-  array(NA, c(col,col, nsubj))
     
     out <- foreach(i = c(1:nsubj)) %dopar% {
       # out <- svds(ref_ds, k = nrow(ref_ds)) 

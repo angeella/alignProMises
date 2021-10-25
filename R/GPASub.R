@@ -51,7 +51,7 @@ GPASub <- function(X, Q = NULL, k, kQ = NULL, ref_ds, scaling = TRUE, reflection
   }
   R = Tr
   if(!centered){
-    scale <- scale / norm(X %*% R, type = "F")^2
+    scale <- scale / norm(X, type = "F")^2
   }
   if(!scaling){
     Xest <- X %*% R
