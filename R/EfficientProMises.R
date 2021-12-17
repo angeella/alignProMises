@@ -104,7 +104,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
     }
     count <- count + 1 
     Xest = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$Xest,simplify = F)), dim = dim(Xstar))
-    R = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$R,simplify = F)), dim = c(col,col,nsubj))
+    R = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$R,simplify = F)), dim = c(row,row,nsubj))
     ref_ds_old = ref_ds
     # ref_ds = aaply(Xest, c(1,2), mean)
     ref_ds <- colMeans(aperm(Xest, c(3, 1, 2)))
