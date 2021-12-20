@@ -12,7 +12,8 @@
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
 #' @param centered center data?
-#' @param coord 3-dim coordinates of the variabiles
+#' @param coord 3-dim or 2-dim coordinates of the variabiles. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, \code{subj = T} then coord is a list of matrices 
+#' with dimensions voxels x 2/3. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it 
 #' @author Angela Andreella and Daniela Corbetta
 #' @return \code{EfficientProMises} returns a list with four components:
 #' \item{\code{Xest}}{an array with the aligned matrices}
@@ -63,41 +64,52 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
   ref_ds <- ref_ds %*% V
   
   Xest <-  array(NA, dim(Xstar))
-  R <-  array(NA, c(col,col, nsubj))
+  R <-  array(NA, c(row, row, nsubj))
+  
+  # Calcolo Qstar
+  if(is.null(Q)){
+    if(subj){
+      Qstar <- foreach(i = c(1:nsubj)) %dopar% {
+          if(!is.null(coord)){
+            
+            coord_star <- t(V) %*% coord[[i]]
+            D <- dist(coord_star, method = "euclidean", diag = T, upper = T)
+            as.matrix(exp(-D))
+          }
+          else 
+            matrix(0, nrow = row, ncol = row)
+        }
+        
+    }
+    
+    else{
+        if(!is.null(coord)){
+          
+          coord_star <- t(V) %*% coord
+          D = dist(coord_star, method = "euclidean", diag = T, upper = T)
+          Qstar <- as.matrix(exp(-D))
+        }
+        else 
+          Qstar <- matrix(0, nrow = row, ncol = row)
+      }
+  }
+  else Qstar <- Q
+  
   
   
   while(dist[count] > t & count < maxIt){
     
     out <- foreach(i = c(1:nsubj)) %dopar% {
-      # out <- svds(ref_ds, k = nrow(ref_ds)) 
-      # V <- out$v
-      # Xest <- X[,,i] %*% V
+      
       if(subj){
-       if(is.null(Q)){
-        if(!is.null(coord)){
-          coord_star <- t(V) %*% coord
-          D = dist(coord_star, method = "euclidean", diag = T, upper = T)
-          Q[,,i] <- as.matrix(exp(-D))
-        }else{
-          Q[,,i] <- matrix(0, nrow = row, ncol = row)
-        }
-      }
         
-        GPASub(Xstar[,,i], Q[,,i], k, kQ = NULL, ref_ds, scaling, reflection, centered)
+        GPASub(Xstar[,,i], Qstar[[i]], k, kQ = NULL, ref_ds, scaling, reflection, centered)
         #vMFP(X[,,i], k, Q[,,i], ref_ds, scaling, reflection)
       }
       
       else{
-        if(is.null(Q)){
-         if(!is.null(coord)){
-           coord_star <- t(V) %*% coord
-           D = dist(coord_star, method = "euclidean", diag = T, upper = T)
-           Q <- as.matrix(exp(-D))
-         }else{
-           Q <- matrix(0, nrow = row, ncol = row)
-         }
-        }
-        GPASub(Xstar[,,i], Q, k, kQ = NULL, ref_ds, scaling, reflection, centered)
+        
+        GPASub(Xstar[,,i], Qstar, k, kQ = NULL, ref_ds, scaling, reflection, centered)
         #vMFP(X[,,i], k, Q, ref_ds, scaling, reflection) 
       }
       

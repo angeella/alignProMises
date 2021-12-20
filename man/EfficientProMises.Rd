@@ -28,7 +28,8 @@ ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
 
 \item{centered}{center data?}
 
-\item{coord}{3-dim coordinates of the variabiles}
+\item{coord}{3-dim or 2-dim coordinates of the variabiles. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, \code{subj = T} then coord is a list of matrices 
+with dimensions voxels x 2/3. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it}
 }
 \value{
 \code{EfficientProMises} returns a list with four components:
