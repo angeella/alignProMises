@@ -12,7 +12,7 @@
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
 #' @param centered center data?
-#' @param coord 3-dim or 2-dim coordinates of the variabiles. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, \code{subj = T} then coord is a list of matrices 
+#' @param coord 3-dim or 2-dim coordinates of the variabiles. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, if \code{subj = T} then coord is a list of matrices 
 #' with dimensions voxels x 2/3. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it 
 #' @author Angela Andreella and Daniela Corbetta
 #' @return \code{EfficientProMises} returns a list with four components:

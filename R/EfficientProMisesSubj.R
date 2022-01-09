@@ -1,8 +1,8 @@
 #' @title Efficient ProMises model
-#' @description Performs the functional alignment using the light version of the von Mises Fisher Procrustes model
+#' @description Performs the functional alignment using the light version of the von Mises Fisher Procrustes model allowing for different number of voxels between matrices
 #' @usage EfficientProMises(data, maxIt=10, t =.001, k = 0, Q = NULL, 
-#' ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
-#' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels 
+#' ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL)
+#' @param data data, i.e., list of matrices with dimension time points - voxels. Matrices can have different number of columns but must have same numbers of rows.
 #' @param maxIt maximum number of iteration
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
 #' @param k value of the concentration parameter of the prior distribution
@@ -11,11 +11,10 @@
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
-#' @param centered center data?
-#' @param coord 3-dim coordinates of the variables
+#' @param coord list with 3-dim coordinates of the variables. Matrices can have different coordinates. If If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it
 #' @author Angela Andreella and Daniela Corbetta
 #' @return \code{EfficientProMises} returns a list with four components:
-#' \item{\code{Xest}}{an array with the aligned matrices}
+#' \item{\code{Xest}}{a list with the aligned matrices}
 #' \item{\code{R}}{an array with the rotation matrices}
 #' \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
 #' \item{\code{count}}{the number of iterations done by the algorithm}
