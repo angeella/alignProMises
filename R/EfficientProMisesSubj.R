@@ -36,15 +36,15 @@ EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_
   dist = vector()
   dist[1] <- Inf
   
-  k <- row
+  j <- row
   
   V <- foreach(i = c(1:nsubj)) %dopar% {
-    out <- svds(matrix(unlist(data[[i]]), nrow = k), k = k)
+    out <- svds(matrix(unlist(data[[i]]), nrow = j), k = j)
     out$v 
     
   }
   # preparo l'array che contiene le X*
-  Xstar <- array(NA, dim=c(k,k,nsubj))
+  Xstar <- array(NA, dim=c(j,j,nsubj))
   dim(Xstar)
   # da cambiare
   for (i in 1:nsubj){
