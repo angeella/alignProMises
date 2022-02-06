@@ -64,7 +64,7 @@ EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_
             
             coord_star <- t(V[[i]]) %*% coord[[i]]
             D <- dist(coord_star, method = "euclidean", diag = T, upper = T)
-            as.matrix(exp(-D))
+            exp(-as.matrix(D))
           }
           else 
             matrix(0, nrow = row, ncol = row)
@@ -78,7 +78,7 @@ EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_
             
             coord_star <- t(V[[i]]) %*% coord
             D <- dist(coord_star, method = "euclidean", diag = T, upper = T)
-            as.matrix(exp(-D))
+            exp(-as.matrix(D))
           }
           else 
             matrix(0, nrow = row, ncol = row)

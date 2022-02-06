@@ -74,7 +74,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
             
             coord_star <- t(V) %*% coord[[i]]
             D <- dist(coord_star, method = "euclidean", diag = T, upper = T)
-            as.matrix(exp(-D))
+            exp(-as.matrix(D))
           }
           else 
             matrix(0, nrow = row, ncol = row)
@@ -87,7 +87,7 @@ EfficientProMises <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds =
           
           coord_star <- t(V) %*% coord
           D = dist(coord_star, method = "euclidean", diag = T, upper = T)
-          Qstar <- as.matrix(exp(-D))
+          Qstar <- exp(-as.matrix(D))
         }
         else 
           Qstar <- matrix(0, nrow = row, ncol = row)
