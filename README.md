@@ -24,3 +24,10 @@ out$Xest
 plot(out$dist, type = 'l')
 ```
 
+## References
+
+Andreella, A., Finos, L., & Lindquist, M. A. (2023). Enhanced hyperalignment via spatial prior information. Human Brain Mapping, 44(4), 1725-1740.
+
+Andreella, A., & Finos, L. (2022). Procrustes analysis for high-dimensional data. Psychometrika, 87(4), 1422-1438.
+
+Goodall, C. (1991). Procrustes methods in the statistical analysis of shape. Journal of the Royal Statistical Society: Series B (Methodological), 53(2), 285-321.

@@ -4,8 +4,8 @@ Title: Functional alignment by ProMises (Procrustes von Mises) model.
 Version: 1.0
 Date: 2020-08-24
 Author: Angela Andreella and Daniela Corbetta.
-Maintainer: Angela Andreella <angela.andreella@unipd.it>
-Description: More about what it does (maybe more than one line).More about what it does (maybe more than one line).More about what it does (maybe more than one line).
+Maintainer: Angela Andreella <angela.andreella@unive.it>
+Description: It performs functional alignment using the ProMises model, i.e., a Procrusted-based approach that can incorporate prior information into the estimation process.
 License: GPL (>= 2)
 Imports: 
   Rcpp (>= 1.0.3),
@@ -21,7 +21,9 @@ LinkingTo:
 Suggests: 
     knitr,
     rmarkdown 
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
+BugReports: https://github.com/angeella/alignProMises/issues
+URL: https://github.com/angeella/alignProMises
