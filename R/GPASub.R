@@ -16,7 +16,7 @@
 #' \item{\code{R}}{the rotation matrix}
 #' @export 
 #' @importFrom rARPACK svds
-#' @useDynLib ProMises
+#' @useDynLib alignProMises
 #' @importFrom Rcpp sourceCpp
 
 
