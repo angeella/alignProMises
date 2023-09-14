@@ -4,11 +4,12 @@
 \alias{EfficientProMisesSubj}
 \title{Efficient ProMises model}
 \usage{
-EfficientProMises(data, maxIt=10, t =.001, k = 0, Q = NULL, 
-ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL)
+EfficientProMisesSubj(data, maxIt=10, t =.001, k = 0, Q = NULL, 
+ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL, 
+singleQ = F, l = NULL)
 }
 \arguments{
-\item{data}{data, i.e., list of matrices with dimension time points - voxels. Matrices can have different number of columns but must have same numbers of rows.}
+\item{data}{data, i.e., list of matrices with dimension time points - voxels. Matrices can have different number of columns but must have the same numbers of rows.}
 
 \item{maxIt}{maximum number of iteration}
 
@@ -18,7 +19,7 @@ ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL)
 
 \item{Q}{value of the location parameter of the prior distribution. It has dimension time-points x time-points, it could be not symmetric.}
 
-\item{ref_ds}{starting matrix to align}
+\item{ref_ds}{starting matrix to align. If \code{NULL}, it is set to the element-wise arithmetic mean of the reduced matrices}
 
 \item{scaling}{Flag to apply scaling transformation}
 
@@ -26,17 +27,22 @@ ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL)
 
 \item{subj}{Flag if each subject has his/her own set of voxel after voxel selection step}
 
-\item{coord}{list with 3-dim coordinates of the variables. Matrices can have different coordinates. If If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it}
+\item{coord}{list with 3-dim coordinates of the variables. Matrices can have different coordinates. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it}
+
+\item{l}{number of singular vectors required to obtained the reduced transformation of the matrices. If \code{NULL}, it is set equal to the number of rows.}
+
+\item{singleQ}{if \code{TRUE}, the same location parameter is assumed for the prior distribution of all the rotation parameters.}
 }
 \value{
-\code{EfficientProMises} returns a list with four components:
+\code{EfficientProMises} returns a list with five components:
 \item{\code{Xest}}{a list with the aligned matrices}
 \item{\code{R}}{an array with the rotation matrices}
 \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
 \item{\code{count}}{the number of iterations done by the algorithm}
+\item{\code{M}}{the element-wise mean matrix of the aligned matrices.}
 }
 \description{
-Performs the functional alignment using the light version of the von Mises Fisher Procrustes model allowing for different number of voxels between matrices
+Performs the functional alignment using the Efficient ProMises model model allowing for different number of voxels between matrices
 }
 \author{
 Angela Andreella and Daniela Corbetta
