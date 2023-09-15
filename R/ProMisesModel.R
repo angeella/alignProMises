@@ -27,9 +27,9 @@
 #' In the case with only two matrices, \code{ProMisesModel} returns a list with two components:
 #' \item{\code{Xest}}{an array with the aligned matrices}
 #' \item{\code{R}}{an array with the rotation matrices (one is the identity)}
-#' @references For the theory on the von Mises-Fisher-Procrustes model see: A. Andreella and L. Finos
-#' (2021), Procrustes analysis for high-dimensional data, 
-#' 	arXiv:2008.04631 
+#' @references For the theory on the ProMises model see: A. Andreella and L. Finos
+#' (2022), Procrustes analysis for high-dimensional data, 
+#' Psychometrika 87, 1422-1438
 #' @export
 #' @importFrom plyr aaply 
 #' @importFrom foreach foreach

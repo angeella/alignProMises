@@ -12,7 +12,7 @@ ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
 
 \item{maxIt}{maximum number of iteration}
 
-\item{t}{the threshold value to be reached as the minimum relative reduction between the matrices}
+\item{t}{the threshold value to be reached as the minimum relative reduction between the mean matrices}
 
 \item{k}{value of the concentration parameter of the prior distribution}
 
@@ -28,7 +28,7 @@ ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
 
 \item{centered}{center data?}
 
-\item{coord}{3-dim or 2-dim coordinates of the variabiles. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, if \code{subj = T} then coord is a list of matrices 
+\item{coord}{3-dim or 2-dim coordinates of the variables. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, if \code{subj = T} then coord is a list of matrices 
 with dimensions voxels x 2/3. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it}
 }
 \value{
@@ -39,7 +39,12 @@ with dimensions voxels x 2/3. If the location parameter \code{Q = NULL}, then \c
 \item{\code{count}}{the number of iterations done by the algorithm}
 }
 \description{
-Performs the functional alignment using the light version of the von Mises Fisher Procrustes model
+Performs the functional alignment using the Efficient ProMises model. Matrices must have the same number of rows.
+}
+\references{
+For the theory on the ProMises model see: A. Andreella and L. Finos
+(2022), Procrustes analysis for high-dimensional data, 
+Psychometrika 87, 1422-1438
 }
 \author{
 Angela Andreella and Daniela Corbetta

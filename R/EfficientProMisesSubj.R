@@ -1,18 +1,18 @@
 #' @title Efficient ProMises model
-#' @description Performs the functional alignment using the Efficient ProMises model model allowing for different number of voxels between matrices
+#' @description Performs the functional alignment using the Efficient ProMises model model allowing for different number of columns (voxel or pixel) between matrices
 #' @usage EfficientProMisesSubj(data, maxIt=10, t =.001, k = 0, Q = NULL, 
 #' ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL, 
 #' singleQ = F, l = NULL)
 #' @param data data, i.e., list of matrices with dimension time points - voxels. Matrices can have different number of columns but must have the same numbers of rows.
 #' @param maxIt maximum number of iteration
-#' @param t the threshold value to be reached as the minimum relative reduction between the matrices
+#' @param t the threshold value to be reached as the minimum relative reduction between the mean matrices
 #' @param k value of the concentration parameter of the prior distribution
 #' @param Q value of the location parameter of the prior distribution. It has dimension time-points x time-points, it could be not symmetric.
 #' @param ref_ds starting matrix to align. If \code{NULL}, it is set to the element-wise arithmetic mean of the reduced matrices
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
-#' @param coord list with 3-dim coordinates of the variables. Matrices can have different coordinates. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it
+#' @param coord list with 3-dim or 2-dim coordinates of the variables. Matrices can have different coordinates. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it
 #' @param l number of singular vectors required to obtained the reduced transformation of the matrices. If \code{NULL}, it is set equal to the number of rows. 
 #' @param singleQ if \code{TRUE}, the same location parameter is assumed for the prior distribution of all the rotation parameters.
 #' @author Angela Andreella and Daniela Corbetta
@@ -22,6 +22,9 @@
 #' \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
 #' \item{\code{count}}{the number of iterations done by the algorithm}
 #' \item{\code{M}}{the element-wise mean matrix of the aligned matrices.}
+#' @references For the theory on the Efficient ProMises model see: A. Andreella and L. Finos
+#' (2022), Procrustes analysis for high-dimensional data, 
+#' Psychometrika 87, 1422-1438
 #' @export
 #' @importFrom plyr aaply 
 #' @importFrom foreach foreach
@@ -46,15 +49,15 @@ EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_
     l <- row
   
   V <- foreach(i = c(1:nsubj)) %dopar% {
-    out <- svds(matrix(unlist(data[[i]]), nrow = j), k = l)
+    out <- svds(data[[i]], k = l)
     out$v 
     
   }
-  # preparo l'array che contiene le X*
+ 
   Xstar <- array(NA, dim=c(j,l,nsubj))
-  # da cambiare
+
   for (i in 1:nsubj){
-    Xstar[,,i] <- matrix(unlist(data[[i]]), nrow = row) %*% matrix(unlist(V[[i]]), nrow = col[i])
+    Xstar[,,i] <- data[[i]] %*% V[[i]] 
   }
   
   ref_ds <- colMeans(aperm(Xstar, c(3, 1, 2)))
@@ -122,11 +125,7 @@ EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_
   
   Xest1 <- vector(mode = "list", length = nsubj)
   for (i in 1:nsubj)
-    Xest1[[i]] <- Xest[,,i] %*% t(matrix(unlist(V[[i]]), nrow = col[i]))
-  # for (i in 1:nsubj) Xest1[,,i] <- Xest[,,i] %*% t(V)
+    Xest1[[i]] <- Xest[,,i] %*% t(V[[i]])
   
   return(list(Xest = Xest1, R = R, dist = dist,  count = count, M = ref_ds))
 }
-
-
-

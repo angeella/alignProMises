@@ -1,10 +1,10 @@
 #' @title Efficient ProMises model
-#' @description Performs the functional alignment using the light version of the von Mises Fisher Procrustes model
+#' @description Performs the functional alignment using the Efficient ProMises model. Matrices must have the same number of rows.
 #' @usage EfficientProMises(data, maxIt=10, t =.001, k = 0, Q = NULL, 
 #' ref_ds = NULL, scaling = T, reflection= T, subj= F, centered = T, coord = NULL)
 #' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels 
 #' @param maxIt maximum number of iteration
-#' @param t the threshold value to be reached as the minimum relative reduction between the matrices
+#' @param t the threshold value to be reached as the minimum relative reduction between the mean matrices
 #' @param k value of the concentration parameter of the prior distribution
 #' @param Q value of the location parameter of the prior distribution. It has dimension time-points x time-points, it could be not symmetric.
 #' @param ref_ds starting matrix to align
@@ -12,7 +12,7 @@
 #' @param reflection Flag to apply reflection transformation
 #' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
 #' @param centered center data?
-#' @param coord 3-dim or 2-dim coordinates of the variabiles. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, if \code{subj = T} then coord is a list of matrices 
+#' @param coord 3-dim or 2-dim coordinates of the variables. If \code{subj = F}  then coord is a matrix with dimensions voxels x 2/3, if \code{subj = T} then coord is a list of matrices 
 #' with dimensions voxels x 2/3. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it 
 #' @author Angela Andreella and Daniela Corbetta
 #' @return \code{EfficientProMises} returns a list with four components:
@@ -20,6 +20,9 @@
 #' \item{\code{R}}{an array with the rotation matrices}
 #' \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
 #' \item{\code{count}}{the number of iterations done by the algorithm}
+#' @references For the theory on the ProMises model see: A. Andreella and L. Finos
+#' (2022), Procrustes analysis for high-dimensional data, 
+#' Psychometrika 87, 1422-1438
 #' @export
 #' @importFrom plyr aaply 
 #' @importFrom foreach foreach

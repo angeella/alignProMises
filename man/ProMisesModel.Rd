@@ -52,9 +52,9 @@ In the case with only two matrices, \code{ProMisesModel} returns a list with two
 Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
 }
 \references{
-For the theory on the von Mises-Fisher-Procrustes model see: A. Andreella and L. Finos
-(2021), Procrustes analysis for high-dimensional data, 
-	arXiv:2008.04631
+For the theory on the ProMises model see: A. Andreella and L. Finos
+(2022), Procrustes analysis for high-dimensional data, 
+Psychometrika 87, 1422-1438
 }
 \author{
 Angela Andreella and Daniela Corbetta

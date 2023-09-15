@@ -13,7 +13,7 @@ singleQ = F, l = NULL)
 
 \item{maxIt}{maximum number of iteration}
 
-\item{t}{the threshold value to be reached as the minimum relative reduction between the matrices}
+\item{t}{the threshold value to be reached as the minimum relative reduction between the mean matrices}
 
 \item{k}{value of the concentration parameter of the prior distribution}
 
@@ -27,14 +27,14 @@ singleQ = F, l = NULL)
 
 \item{subj}{Flag if each subject has his/her own set of voxel after voxel selection step}
 
-\item{coord}{list with 3-dim coordinates of the variables. Matrices can have different coordinates. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it}
+\item{coord}{list with 3-dim or 2-dim coordinates of the variables. Matrices can have different coordinates. If the location parameter \code{Q = NULL}, then \code{coord} is used to compute it}
 
 \item{l}{number of singular vectors required to obtained the reduced transformation of the matrices. If \code{NULL}, it is set equal to the number of rows.}
 
 \item{singleQ}{if \code{TRUE}, the same location parameter is assumed for the prior distribution of all the rotation parameters.}
 }
 \value{
-\code{EfficientProMises} returns a list with five components:
+\code{EfficientProMisesSubj} returns a list with five components:
 \item{\code{Xest}}{a list with the aligned matrices}
 \item{\code{R}}{an array with the rotation matrices}
 \item{\code{dist}}{a vector with length equal to the number of iterations that contains the distances between a reference matrix and the previous one}
@@ -42,7 +42,12 @@ singleQ = F, l = NULL)
 \item{\code{M}}{the element-wise mean matrix of the aligned matrices.}
 }
 \description{
-Performs the functional alignment using the Efficient ProMises model model allowing for different number of voxels between matrices
+Performs the functional alignment using the Efficient ProMises model model allowing for different number of columns (voxel or pixel) between matrices
+}
+\references{
+For the theory on the Efficient ProMises model see: A. Andreella and L. Finos
+(2022), Procrustes analysis for high-dimensional data, 
+Psychometrika 87, 1422-1438
 }
 \author{
 Angela Andreella and Daniela Corbetta
