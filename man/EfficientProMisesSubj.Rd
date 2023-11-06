@@ -42,7 +42,7 @@ singleQ = F, l = NULL)
 \item{\code{M}}{the element-wise mean matrix of the aligned matrices.}
 }
 \description{
-Performs the functional alignment using the Efficient ProMises model model allowing for different number of columns (voxel or pixel) between matrices
+Performs the functional alignment using the Efficient ProMises model allowing for different number of columns (voxel or pixel) between matrices.
 }
 \references{
 For the theory on the Efficient ProMises model see: A. Andreella and L. Finos

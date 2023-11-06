@@ -49,7 +49,6 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
   dist = vector()
   dist[1] <- Inf
   
-  # M <- aaply(data, c(1,2), mean)
   M <- colMeans(aperm(data, c(3, 1, 2)))
   if(centered){
     datas_centered <- aaply(data, 3, function(x) x - M)
@@ -93,10 +92,8 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
     
     out <-foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
-        # GPASub(X[,,i], Q[,,i], k, ref_ds, scaling, reflection)
         GPASub(X[,,i], Q[,,i], k, kQ, ref_ds, scaling, reflection, centered)
       }else{
-        #  GPASub(X[,,i], Q, k, ref_ds, scaling, reflection) 
         GPASub(X[,,i], Q, k, kQ, ref_ds, scaling, reflection, centered) 
       }
       
@@ -105,7 +102,6 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
     Xest = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$Xest,simplify = F)), dim = dim(X))
     R = array(unlist(sapply(c(1:nsubj), function(x) out[[x]]$R,simplify = F)), dim = c(col,col,nsubj))
     ref_ds_old = ref_ds
-    #ref_ds = aaply(Xest, c(1,2), mean)
     ref_ds <- colMeans(aperm(Xest, c(3, 1, 2)))
     dist[count] <- norm(ref_ds-ref_ds_old,type="F")
   }

@@ -1,5 +1,5 @@
 #' @title Efficient ProMises model
-#' @description Performs the functional alignment using the Efficient ProMises model model allowing for different number of columns (voxel or pixel) between matrices
+#' @description Performs the functional alignment using the Efficient ProMises model allowing for different number of columns (voxel or pixel) between matrices.
 #' @usage EfficientProMisesSubj(data, maxIt=10, t =.001, k = 0, Q = NULL, 
 #' ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL, 
 #' singleQ = F, l = NULL)
