@@ -4,9 +4,9 @@
 \alias{ProMisesModel}
 \title{ProMises model}
 \usage{
-ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
-ref_ds = NULL, scaling= T, reflection= T, 
-subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
+ProMisesModel(data, maxIt = 10, t = .001, k = 0, Q = NULL, 
+ref_ds = NULL, scaling = T, reflection= T, 
+subj = F, centered = T, kCalibrate = F, D = NULL, p = 0.01
 ind = 2)
 }
 \arguments{
@@ -18,7 +18,7 @@ ind = 2)
 
 \item{k}{value of the concentration parameter of the prior distribution}
 
-\item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.}
+\item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric. If \code{Q=NULL}, it is set equal to a matrix of 0 (i.e. no regularization, classic GPA)}
 
 \item{ref_ds}{starting reference matrix to align. If \code{NULL}, at the first iteration it is set equal to the element-wise mean of the data matrices}
 
@@ -26,7 +26,7 @@ ind = 2)
 
 \item{reflection}{Flag to apply reflection transformation}
 
-\item{subj}{Flag if each subject has his/her own set of voxel after voxel selection step}
+\item{subj}{Flag if each subject has his/her own set of voxel after voxel selection step. If \code{subj=TRUE}, then the model considers a different location parameter for the prior distribution of each rotation parameter and \code{Q} has to be an array of dimensions voxels x voxels x number of matrices.}
 
 \item{centered}{if \code{TRUE}, data matrices are centered before the algorithm starts}
 
@@ -50,6 +50,15 @@ In the case with only two matrices, \code{ProMisesModel} returns a list with two
 }
 \description{
 Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
+}
+\examples{
+{
+## create a random array of 3 matrices with 24576 time-points and 60 voxels
+data<- array(rnorm(24576*60*3), dim = c(24576,60,3))
+## Align the three matrices setting the location parameter equal to the identity and the concentration parameter equal to 1
+out <- ProMisesModel(data, maxIt = 20, t = 1/100, k = 1, Q = diag(1,60), 
+scaling = FALSE, reflection = FALSE, subj = FALSE, centered = FALSE)
+}
 }
 \references{
 For the theory on the ProMises model see: A. Andreella and L. Finos

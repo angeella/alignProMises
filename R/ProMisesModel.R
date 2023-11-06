@@ -1,18 +1,18 @@
 #' @title ProMises model
 #' @description Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
-#' @usage ProMisesModel(data, maxIt=10, t=.001, k = 0, Q = NULL, 
-#' ref_ds = NULL, scaling= T, reflection= T, 
-#' subj= F, centered=T, kCalibrate = F, D = NULL, p = 0.01
+#' @usage ProMisesModel(data, maxIt = 10, t = .001, k = 0, Q = NULL, 
+#' ref_ds = NULL, scaling = T, reflection= T, 
+#' subj = F, centered = T, kCalibrate = F, D = NULL, p = 0.01
 #' ind = 2)
 #' @param data data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels
 #' @param maxIt maximum number of iterations
 #' @param t the threshold value to be reached as the minimum relative reduction between the matrices
 #' @param k value of the concentration parameter of the prior distribution
-#' @param Q value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.
+#' @param Q value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric. If \code{Q=NULL}, it is set equal to a matrix of 0 (i.e. no regularization, classic GPA)
 #' @param ref_ds starting reference matrix to align. If \code{NULL}, at the first iteration it is set equal to the element-wise mean of the data matrices
 #' @param scaling Flag to apply scaling transformation
 #' @param reflection Flag to apply reflection transformation
-#' @param subj Flag if each subject has his/her own set of voxel after voxel selection step
+#' @param subj Flag if each subject has his/her own set of voxel after voxel selection step. If \code{subj=TRUE}, then the model considers a different location parameter for the prior distribution of each rotation parameter and \code{Q} has to be an array of dimensions voxels x voxels x number of matrices.
 #' @param centered if \code{TRUE}, data matrices are centered before the algorithm starts
 #' @param kCalibrate if \code{TRUE}, the parameters of the prior distribution are computed with the function \code{kCalibrate}
 #' @param D squared euclidean distance matrix between the coordinates of the voxels. Necessary only when \code{kCalibrate = TRUE}
@@ -30,6 +30,13 @@
 #' @references For the theory on the ProMises model see: A. Andreella and L. Finos
 #' (2022), Procrustes analysis for high-dimensional data, 
 #' Psychometrika 87, 1422-1438
+#' @examples{
+#' ## create a random array of 3 matrices with 24576 time-points and 60 voxels
+#' data<- array(rnorm(24576*60*3), dim = c(24576,60,3))
+#' ## Align the three matrices setting the location parameter equal to the identity and the concentration parameter equal to 1
+#' out <- ProMisesModel(data, maxIt = 20, t = 1/100, k = 1, Q = diag(1,60), 
+#' scaling = FALSE, reflection = FALSE, subj = FALSE, centered = FALSE)
+#' }
 #' @export
 #' @importFrom plyr aaply 
 #' @importFrom foreach foreach
