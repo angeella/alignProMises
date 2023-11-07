@@ -1,6 +1,6 @@
 Package: alignProMises
 Type: Package
-Title: Functional alignment by ProMises (Procrustes von Mises) model.
+Title: Functional alignment by ProMises (Procrustes von Mises) model
 Version: 1.0
 Date: 2020-08-24
 Author: Angela Andreella and Daniela Corbetta.
@@ -10,10 +10,8 @@ License: GPL (>= 2)
 Imports: 
   Rcpp (>= 1.0.3),
   foreach, 
-  doParallel,
   diffusionMap,
   rARPACK,
-  Matrix,
   plyr
 LinkingTo: 
   Rcpp, 

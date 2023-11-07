@@ -1,7 +1,5 @@
 #' @title Efficient ProMises model
 #' @description Performs the functional alignment using the Efficient ProMises model allowing for different number of columns (voxel or pixel) between matrices.
-#' @usage EfficientProMisesSubj(data, maxIt=10, t =.001, k = 0, Q = NULL, 
-#' ref_ds = NULL, scaling = T, reflection= T, subj = T, coord = NULL, l = NULL)
 #' @param data data, i.e., list of matrices with dimension time points - voxels. Matrices can have different number of columns but must have the same numbers of rows.
 #' @param maxIt maximum number of iteration
 #' @param t the threshold value to be reached as the minimum relative reduction between the mean matrices
@@ -38,8 +36,8 @@
 #' ## Since subj = F and Q is a single matrix, all the rotation parameters 
 #' ## will have the same location parameter
 #' out <- EfficientProMisesSubj(data = X, maxIt = 10, t = 1, k = 1,
-#'                              Q = diag(1,100), subj = F, scaling = F,
-#'                              reflection = F, ref_ds = NULL, coord = NULL, 
+#'                              Q = diag(1,100), subj = FALSE, scaling = FALSE,
+#'                              reflection = FALSE, ref_ds = NULL, coord = NULL, 
 #'                              l = NULL)
 #'                              
 #' ## create random coordinates
@@ -47,22 +45,22 @@
 #'           cbind(sample(1:3669), sample(1:3669)),
 #'           cbind(sample(1:3500), sample(1:3500)))
 #'
-#' ## Align matrices considering a different location parameter for every matrix,
-#' ## calculated as specified in details
+#' ## Align matrices considering a different location parameter for every 
+#' ## matrix, calculated from the coordinates as specified in details
 #' out1 <- EfficientProMisesSubj(data = X, maxIt = 10, t = 1, k = 1,
-#'                               Q = NULL, subj = T, scaling = F,
-#'                               reflection = F, ref_ds = NULL, coord = C, 
+#'                               Q = NULL, subj = TRUE, scaling = FALSE,
+#'                               reflection = FALSE, ref_ds = NULL, coord = C, 
 #'                               l = NULL)   
 #'                               
 #' ## Extract only the first 15 singular vectors to compute the low-dimensional
 #' ## representation of the matrices
 #' out2 <- EfficientProMisesSubj(data = X, maxIt = 10, t = 1, k = 1,
-#'                               Q = NULL, subj = T, scaling = F,
-#'                               reflection = F, ref_ds = NULL, coord = C, 
+#'                               Q = NULL, subj = TRUE, scaling = FALSE,
+#'                               reflection = FALSE, ref_ds = NULL, coord = C, 
 #'                               l = 15)                         
 #' }
-#' @references For the theory on the Efficient ProMises model see: A. Andreella and L. Finos
-#' (2022), Procrustes analysis for high-dimensional data, 
+#' @references For the theory on the Efficient ProMises model see: A. Andreella 
+#' and L. Finos (2022), Procrustes analysis for high-dimensional data, 
 #' Psychometrika 87, 1422-1438
 #' @export
 #' @importFrom plyr aaply 
@@ -70,7 +68,7 @@
 #' @importFrom foreach %dopar%
 #' @importFrom rARPACK svds
 
-EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = T, reflection= T, subj= T, coord = NULL, l = NULL){
+EfficientProMisesSubj <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NULL, scaling = TRUE, reflection= TRUE, subj= TRUE, coord = NULL, l = NULL){
   
   if(!is.list(data)){warnings("Please insert a list of matrices with dimension time points - voxels")}
   

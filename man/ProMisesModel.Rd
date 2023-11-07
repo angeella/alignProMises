@@ -4,10 +4,22 @@
 \alias{ProMisesModel}
 \title{ProMises model}
 \usage{
-ProMisesModel(data, maxIt = 10, t = .001, k = 0, Q = NULL, 
-ref_ds = NULL, scaling = T, reflection= T, 
-subj = F, centered = T, kCalibrate = F, D = NULL, p = 0.01
-ind = 2)
+ProMisesModel(
+  data,
+  maxIt = 10,
+  t = 0.001,
+  k = 0,
+  Q = NULL,
+  ref_ds = NULL,
+  scaling = TRUE,
+  reflection = TRUE,
+  subj = FALSE,
+  centered = TRUE,
+  kCalibrate = FALSE,
+  D = NULL,
+  p = 0.01,
+  ind = 2
+)
 }
 \arguments{
 \item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}
@@ -55,7 +67,8 @@ Performs the functional alignment using the von Mises Fisher Procrustes model wi
 {
 ## create a random array of 3 matrices with 24576 time-points and 60 voxels
 data<- array(rnorm(24576*60*3), dim = c(24576,60,3))
-## Align the three matrices setting the location parameter equal to the identity and the concentration parameter equal to 1
+## Align the three matrices setting the location parameter equal to the 
+## identity and the concentration parameter equal to 1
 out <- ProMisesModel(data, maxIt = 20, t = 1/100, k = 1, Q = diag(1,60), 
 scaling = FALSE, reflection = FALSE, subj = FALSE, centered = FALSE)
 }

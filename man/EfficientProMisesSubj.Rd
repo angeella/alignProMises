@@ -4,8 +4,19 @@
 \alias{EfficientProMisesSubj}
 \title{Efficient ProMises model}
 \usage{
-EfficientProMisesSubj(data, maxIt=10, t =.001, k = 0, Q = NULL, 
-ref_ds = NULL, scaling = T, reflection= T, subj = T, coord = NULL, l = NULL)
+EfficientProMisesSubj(
+  data,
+  maxIt = 10,
+  t = 0.001,
+  k = 0,
+  Q = NULL,
+  ref_ds = NULL,
+  scaling = TRUE,
+  reflection = TRUE,
+  subj = TRUE,
+  coord = NULL,
+  l = NULL
+)
 }
 \arguments{
 \item{data}{data, i.e., list of matrices with dimension time points - voxels. Matrices can have different number of columns but must have the same numbers of rows.}
@@ -61,8 +72,8 @@ X <- list(matrix(rnorm(100*4000), nrow=100),
 ## Since subj = F and Q is a single matrix, all the rotation parameters 
 ## will have the same location parameter
 out <- EfficientProMisesSubj(data = X, maxIt = 10, t = 1, k = 1,
-                             Q = diag(1,100), subj = F, scaling = F,
-                             reflection = F, ref_ds = NULL, coord = NULL, 
+                             Q = diag(1,100), subj = FALSE, scaling = FALSE,
+                             reflection = FALSE, ref_ds = NULL, coord = NULL, 
                              l = NULL)
                              
 ## create random coordinates
@@ -70,24 +81,24 @@ C <- list(cbind(sample(1:4000), sample(1:4000)),
           cbind(sample(1:3669), sample(1:3669)),
           cbind(sample(1:3500), sample(1:3500)))
 
-## Align matrices considering a different location parameter for every matrix,
-## calculated as specified in details
+## Align matrices considering a different location parameter for every 
+## matrix, calculated as specified in details
 out1 <- EfficientProMisesSubj(data = X, maxIt = 10, t = 1, k = 1,
-                              Q = NULL, subj = T, scaling = F,
-                              reflection = F, ref_ds = NULL, coord = C, 
+                              Q = NULL, subj = TRUE, scaling = FALSE,
+                              reflection = FALSE, ref_ds = NULL, coord = C, 
                               l = NULL)   
                               
 ## Extract only the first 15 singular vectors to compute the low-dimensional
 ## representation of the matrices
 out2 <- EfficientProMisesSubj(data = X, maxIt = 10, t = 1, k = 1,
-                              Q = NULL, subj = T, scaling = F,
-                              reflection = F, ref_ds = NULL, coord = C, 
+                              Q = NULL, subj = TRUE, scaling = FALSE,
+                              reflection = FALSE, ref_ds = NULL, coord = C, 
                               l = 15)                         
 }
 }
 \references{
-For the theory on the Efficient ProMises model see: A. Andreella and L. Finos
-(2022), Procrustes analysis for high-dimensional data, 
+For the theory on the Efficient ProMises model see: A. Andreella 
+and L. Finos (2022), Procrustes analysis for high-dimensional data, 
 Psychometrika 87, 1422-1438
 }
 \author{
