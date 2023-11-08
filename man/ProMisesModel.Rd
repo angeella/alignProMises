@@ -14,7 +14,7 @@ ProMisesModel(
   scaling = TRUE,
   reflection = TRUE,
   subj = FALSE,
-  centered = TRUE,
+  center = TRUE,
   kCalibrate = FALSE,
   D = NULL,
   p = 0.01,
@@ -22,33 +22,33 @@ ProMisesModel(
 )
 }
 \arguments{
-\item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels}
+\item{data}{data, i.e., array of matrices with dimension time points - voxels or list of matrices with dimension time points - voxels.}
 
-\item{maxIt}{maximum number of iterations}
+\item{maxIt}{maximum number of iterations.}
 
-\item{t}{the threshold value to be reached as the minimum relative reduction between the matrices}
+\item{t}{the threshold value to be reached as the minimum relative reduction between the mean matrices.}
 
-\item{k}{value of the concentration parameter of the prior distribution}
+\item{k}{value of the concentration parameter of the prior distribution of the rotation parameter.}
 
-\item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric. If \code{Q=NULL}, it is set equal to a matrix of 0 (i.e. no regularization, classic GPA)}
+\item{Q}{value of the location parameter of the prior distribution of the rotation parameter. It has dimension voxels x voxels, it could be not symmetric. If \code{Q=NULL}, it is set equal to a matrix of 0 (i.e. no regularization, classic Generalized Procrustes Analysis).}
 
-\item{ref_ds}{starting reference matrix to align. If \code{NULL}, at the first iteration it is set equal to the element-wise mean of the data matrices}
+\item{ref_ds}{starting reference matrix to align. If \code{NULL}, at the first iteration it is set equal to the element-wise mean of the data matrices.}
 
-\item{scaling}{Flag to apply scaling transformation}
+\item{scaling}{Flag to apply scaling transformation.}
 
-\item{reflection}{Flag to apply reflection transformation}
+\item{reflection}{Flag to apply reflection transformation.}
 
 \item{subj}{Flag if each subject has his/her own set of voxel after voxel selection step. If \code{subj=TRUE}, then the model considers a different location parameter for the prior distribution of each rotation parameter and \code{Q} has to be an array of dimensions voxels x voxels x number of matrices.}
 
-\item{centered}{if \code{TRUE}, data matrices are centered before the algorithm starts}
+\item{center}{Flag to apply centering transformation to data prior to alignment step.}
 
-\item{kCalibrate}{if \code{TRUE}, the parameters of the prior distribution are computed with the function \code{kCalibrate}}
+\item{kCalibrate}{if \code{TRUE}, the parameters of the prior distribution are computed with the function \code{kCalibrate}.}
 
-\item{D}{squared euclidean distance matrix between the coordinates of the voxels. Necessary only when \code{kCalibrate = TRUE}}
+\item{D}{squared euclidean distance matrix between the coordinates of the voxels. Necessary only when \code{kCalibrate = TRUE}.}
 
-\item{p}{distances to compute bandwith value for the \code{kCalibrate} function. Default value is 0.01}
+\item{p}{distances to compute bandwith value for the \code{kCalibrate} function. Default value is 0.01.}
 
-\item{ind}{(only required in the case with two matrices) the index of the matrix to be used as reference, must be 1 or 2}
+\item{ind}{(only required in the case with two matrices) the index of the matrix to be used as reference, must be 1 or 2.}
 }
 \value{
 In the case with more than two matrices, \code{ProMisesModel} returns a list with four components:
@@ -61,7 +61,38 @@ In the case with only two matrices, \code{ProMisesModel} returns a list with two
 \item{\code{R}}{an array with the rotation matrices (one is the identity)}
 }
 \description{
-Performs the functional alignment using the von Mises Fisher Procrustes model with unknown reference matrix
+Performs the functional alignment of input data matrices using the ProMises model with unknown reference matrix.
+}
+\details{
+Let \eqn{X_1,\dots, X_N \in \mathbb{R}^{n\times m}} be the \eqn{N} matrices to be aligned. 
+The ProMises model assumes  that each matrix can be represented as a random perturbation of a common
+reference matrix plus an error term:
+\deqn{X_i=(M+E_i)R_i^\top,} where
+\itemize{
+\item \eqn{M \in \mathbb{R}^{n\times m}} is the common reference matrix,
+\item \eqn{E_i \in \mathbb{R}^{n\times m}} is a matrix error term following a matrix normal distribution,
+\item \eqn{R_i \in \mathbb{R}^{m\times m}} is the rotation parameter and follows a von Mises-Fisher
+distribution with location parameter \eqn{Q} and concentration parameter \eqn{k}.
+}
+
+The rotation parameters \eqn{R_i} are estimated using the maximum a posteriori estimate,
+given by \eqn{\hat{R}_i = U_iV_i^\top}, where \eqn{U_i} and \eqn{V_i} are obtained
+from the singular value decomposition of \eqn{Q^* = X_i^\top M + kQ}.
+
+The common reference matrix \eqn{M} represents the shared structure among all matrices,
+serving as a baseline for the alignment process. Since it is unknown, it is iteratively updated during the
+algorithm execution. In particular, the algorithm starts with an initial guess for \eqn{M} 
+as the element-wise mean matrix of the input matrices \eqn{X_i}. Then, in each iteration, \eqn{M} is updated based on the mean of the
+aligned matrices until convergence (Frobenius distance between two subsequent 
+estimates of \eqn{M} less than \code{t}) or until the maximum number of iterations is reached.
+
+
+If the number of columns \eqn{m} is large or if each matrix has a different number of column,
+then use the \link[alignProMises]{EfficientProMises} function.
+
+If there are only two matrices, then one matrix is projected onto the other. The solution 
+is explicit (see Green, 1952) and is equal to \eqn{\hat{R}=UV^\top},
+where \eqn{U} and \eqn{V} come from the SVD of \eqn{X_1^\top X_2}.
 }
 \examples{
 {
@@ -70,13 +101,16 @@ data<- array(rnorm(24576*60*3), dim = c(24576,60,3))
 ## Align the three matrices setting the location parameter equal to the 
 ## identity and the concentration parameter equal to 1
 out <- ProMisesModel(data, maxIt = 20, t = 1/100, k = 1, Q = diag(1,60), 
-scaling = FALSE, reflection = FALSE, subj = FALSE, centered = FALSE)
+scaling = FALSE, reflection = FALSE, subj = FALSE, center = FALSE)
 }
 }
 \references{
-For the theory on the ProMises model see: A. Andreella and L. Finos
-(2022), Procrustes analysis for high-dimensional data, 
+For the theory on the ProMises model and more details on the algorithm see: 
+A. Andreella and L. Finos (2022), Procrustes analysis for high-dimensional data, 
 Psychometrika 87, 1422-1438
+
+For the two matrix case see: B. Green (1952), The orthogonal approximation of an oblique structure in
+factor analysis, Psychometrika 17, 429-440.
 }
 \author{
 Angela Andreella and Daniela Corbetta

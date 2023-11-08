@@ -1,17 +1,15 @@
-#' @title ProMises model
-#' @description Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix
-#' @usage GPASub(X, Q = NULL, k, kQ = NULL, ref_ds, 
-#' scaling = TRUE, reflection = TRUE, centered = TRUE)
-#' @param X data, i.e., matrix with dimension time points - voxels 
+#' @title ProMises model with known reference matrix
+#' @description Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix.
+#' @param X data, i.e., matrix with dimension time points - voxels.
 #' @param Q value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.
-#' @param k value of the concentration parameter of the prior distribution
-#' @param kQ product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of \code{k} and \code{Q}
-#' @param ref_ds reference matrix to align
-#' @param scaling Flag to apply scaling transformation
-#' @param reflection Flag to apply reflection transformation
+#' @param k value of the concentration parameter of the prior distribution of the rotation parameter.
+#' @param kQ product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of \code{k} and \code{Q}.
+#' @param ref_ds reference matrix to align.
+#' @param scaling Flag to apply scaling transformation.
+#' @param reflection Flag to apply reflection transformation.
 #' @param centered centered data?
 #' @author Angela Andreella and Daniela Corbetta
-#' @return \code{vMFP} returns a list with two components:
+#' @return \code{GPASub} returns a list with two components:
 #' \item{\code{Xest}}{the aligned matrix}
 #' \item{\code{R}}{the rotation matrix}
 #' @export 

@@ -2,35 +2,43 @@
 % Please edit documentation in R/GPASub.R
 \name{GPASub}
 \alias{GPASub}
-\title{ProMises model}
+\title{ProMises model with known reference matrix}
 \usage{
-GPASub(X, Q = NULL, k, kQ = NULL, ref_ds, 
-scaling = TRUE, reflection = TRUE, centered = TRUE)
+GPASub(
+  X,
+  Q = NULL,
+  k,
+  kQ = NULL,
+  ref_ds,
+  scaling = TRUE,
+  reflection = TRUE,
+  centered = TRUE
+)
 }
 \arguments{
-\item{X}{data, i.e., matrix with dimension time points - voxels}
+\item{X}{data, i.e., matrix with dimension time points - voxels.}
 
 \item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.}
 
-\item{k}{value of the concentration parameter of the prior distribution}
+\item{k}{value of the concentration parameter of the prior distribution of the rotation parameter.}
 
-\item{kQ}{product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of \code{k} and \code{Q}}
+\item{kQ}{product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of \code{k} and \code{Q}.}
 
-\item{ref_ds}{reference matrix to align}
+\item{ref_ds}{reference matrix to align.}
 
-\item{scaling}{Flag to apply scaling transformation}
+\item{scaling}{Flag to apply scaling transformation.}
 
-\item{reflection}{Flag to apply reflection transformation}
+\item{reflection}{Flag to apply reflection transformation.}
 
 \item{centered}{centered data?}
 }
 \value{
-\code{vMFP} returns a list with two components:
+\code{GPASub} returns a list with two components:
 \item{\code{Xest}}{the aligned matrix}
 \item{\code{R}}{the rotation matrix}
 }
 \description{
-Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix
+Perform functional alignment of a matrix by von Mises Fisher Procrustes model with known reference matrix.
 }
 \author{
 Angela Andreella and Daniela Corbetta
