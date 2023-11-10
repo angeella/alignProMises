@@ -12,8 +12,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // ProMises
-List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection);
-RcppExport SEXP _alignProMises_ProMises(SEXP XSEXP, SEXP kSEXP, SEXP QSEXP, SEXP ref_dsSEXP, SEXP scalingSEXP, SEXP reflectionSEXP) {
+List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection, bool centered);
+RcppExport SEXP _alignProMises_ProMises(SEXP XSEXP, SEXP kSEXP, SEXP QSEXP, SEXP ref_dsSEXP, SEXP scalingSEXP, SEXP reflectionSEXP, SEXP centeredSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type ref_ds(ref_dsSEXP);
     Rcpp::traits::input_parameter< bool >::type scaling(scalingSEXP);
     Rcpp::traits::input_parameter< bool >::type reflection(reflectionSEXP);
-    rcpp_result_gen = Rcpp::wrap(ProMises(X, k, Q, ref_ds, scaling, reflection));
+    Rcpp::traits::input_parameter< bool >::type centered(centeredSEXP);
+    rcpp_result_gen = Rcpp::wrap(ProMises(X, k, Q, ref_ds, scaling, reflection, centered));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -40,7 +41,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_alignProMises_ProMises", (DL_FUNC) &_alignProMises_ProMises, 6},
+    {"_alignProMises_ProMises", (DL_FUNC) &_alignProMises_ProMises, 7},
     {"_alignProMises_svdC", (DL_FUNC) &_alignProMises_svdC, 1},
     {NULL, NULL, 0}
 };

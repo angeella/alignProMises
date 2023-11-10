@@ -6,9 +6,9 @@ using namespace Rcpp;
 // [[Rcpp::plugins(cpp11)]] 
 // [[Rcpp::export]] 
 
-List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection) {
+List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection, bool centered) {
   int nc = X.n_cols;
-
+// Need to add case in which data matrices are not centered for the scaling
   arma::mat U;
   arma::vec s;
   arma::mat V;
@@ -21,14 +21,18 @@ List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling,
     s_new.eye(nc,nc);
     double  d = det(U * Vt);
     if (d > 0){ 
-      s_new(nc,nc) =  1;
+      s_new(nc-1,nc-1) =  1;
       }
     if (d < 0) {
-      s_new(nc,nc) =  -1;
+      s_new(nc-1,nc-1) =  -1;
       }
     arma::mat R = (U * s_new) * Vt;
     double scale = arma::sum(s_new * s);
-    arma::mat Xest = X * R.t() * scale;
+    if (!centered){
+      double normX = arma::norm(X, "fro");
+      scale = scale / std::pow(normX, 2);
+    }
+    arma::mat Xest = X * R * scale;
     List out = List::create(Named("Xest") = Xest, Named("R") = R);
     return out; 
   }
@@ -37,27 +41,31 @@ List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling,
     s_new.eye(nc,nc);
     double  d = det(U * Vt);
     if (d > 0){ 
-      s_new(nc,nc) =  1;
+      s_new(nc-1,nc-1) =  1;
     }
     if (d < 0) {
-      s_new(nc,nc) =  -1;
+      s_new(nc-1,nc-1) =  -1;
     }
     arma::mat R = (U * s_new) * Vt;
-    arma::mat Xest = X * R.t();
+    arma::mat Xest = X * R;
     List out = List::create(Named("Xest") = Xest, Named("R") = R);
     return out;  
   }
   if(reflection & scaling){
-    arma::mat R =  U * V;
+    arma::mat R =  U * Vt;
     double scale =  arma::sum(s);
-    arma::mat Xest = X * R.t() * scale;
+    if (!centered){
+      double normX = arma::norm(X, "fro");
+      scale = scale / std::pow(normX, 2);
+    }
+    arma::mat Xest = X * R * scale;
     List out = List::create(Named("Xest") = Xest, Named("R") = R);
     return out;  
   }
 
   if(reflection & !scaling){
-    arma::mat R =  U * V;
-    arma::mat Xest = X * R.t();
+    arma::mat R =  U * Vt;
+    arma::mat Xest = X * R;
     List out = List::create(Named("Xest") = Xest, Named("R") = R);
     return out; 
   }
