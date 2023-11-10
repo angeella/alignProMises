@@ -8,7 +8,6 @@ using namespace Rcpp;
 
 List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling, bool reflection, bool centered) {
   int nc = X.n_cols;
-// Need to add case in which data matrices are not centered for the scaling
   arma::mat U;
   arma::vec s;
   arma::mat V;
