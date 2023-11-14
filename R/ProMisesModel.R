@@ -126,7 +126,7 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
   if (nsubj == 2 & is.null(ref_ds)){
     if(ind != 1 & ind != 2){warnings("ind must be 1 or 2")}
     ref_ds <- X[,,ind]
-    out <- GPASub(X[,,-ind], Q, k, kQ, ref_ds, scaling, reflection, center)
+    out <- GPASub(X[,,-ind], Q, k, ref_ds, scaling, reflection, center)
     Xest <- array(NA, dim = dim(X))
     Xest[,,ind] <- data[,,ind]
     Xest[,,-ind] <- out$Xest
