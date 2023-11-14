@@ -84,8 +84,14 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
   col <- dim(data)[2] 
   nsubj <- dim(data)[3]
   
-  if(subj & (is.na(dim(Q)[3]) | dim(Q)[3]!=nsubj)){
-    stop("If subj=T then please provide location parameter for each matrix (i.e. Q must be an array)")
+  # If Q is provided, it must be a matrix if subj=F and a list if subj=T
+  if(!is.null(Q)){
+    if(subj & (is.na(dim(Q)[3]) | dim(Q)[3]!=nsubj)){
+      stop("If subj=T then please provide location parameter for each matrix (i.e. Q must be an array)")
+    }
+    if(!subj & !is.na(dim(Q)[3])){
+      stop("If subj=F then please provide a unique location parameter (i.e. Q must be a matrix)")
+    }
   }
   
   if(col>=4000){
@@ -112,10 +118,8 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
     ref_ds <- M
   }
   if(kCalibrate){
-    kQ <- kCalibrate(D = D, p = p)
-  }
-  else{
-    kQ <- NULL
+    Q <- kCalibrate(D = D, p = p)
+    k <- 1
   }
   
   # 2 images: explicit solution
@@ -142,9 +146,11 @@ ProMisesModel <- function(data, maxIt=10, t =.001, k = 0, Q = NULL, ref_ds = NUL
     
     out <- foreach(i = c(1:nsubj)) %dopar% {
       if(subj){
-        GPASub(X[,,i], Q[,,i], k, kQ, ref_ds, scaling, reflection, center)
+        ProMises(X[,,i], k=k, Q=Q[,,i], ref_ds=ref_ds, scaling=scaling, 
+                 reflection=reflection, centered=center)
       }else{
-        GPASub(X[,,i], Q, k, kQ, ref_ds, scaling, reflection, center) 
+        ProMises(X[,,i], k=k, Q=Q, ref_ds=ref_ds, scaling=scaling, 
+               reflection=reflection, centered=center) 
       }
       
     }

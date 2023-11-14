@@ -8,7 +8,6 @@ GPASub(
   X,
   Q = NULL,
   k,
-  kQ = NULL,
   ref_ds,
   scaling = TRUE,
   reflection = TRUE,
@@ -21,8 +20,6 @@ GPASub(
 \item{Q}{value of the location parameter of the prior distribution. It has dimension voxels x voxels, it could be not symmetric.}
 
 \item{k}{value of the concentration parameter of the prior distribution of the rotation parameter.}
-
-\item{kQ}{product between the location parameter and the concentration parameter of the prior distribution. Could be supplied instead of \code{k} and \code{Q}.}
 
 \item{ref_ds}{reference matrix to align.}
 

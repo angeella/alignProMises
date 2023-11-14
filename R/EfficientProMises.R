@@ -238,7 +238,7 @@ EfficientProMises <- function(data, maxIt = 10, t = 0.001, k = 0, Q = NULL, ref_
   
   ref_ds <- colMeans(aperm(Xstar, c(3, 1, 2))) # Mean of reduced matrices as starting M matrix
   
-  # Centering transformation (possible only if matrices have same number of columns)
+  # Centering transformation
   if(center){
     datas_centered <- aaply(Xstar, 3, function(x) x - ref_ds)
     X <- aaply(datas_centered, 1, function(x) x/norm(x, type="F"))
@@ -257,17 +257,15 @@ EfficientProMises <- function(data, maxIt = 10, t = 0.001, k = 0, Q = NULL, ref_
     # Different location parameter for each image
     if(!singleQ){
       out <- foreach(i = c(1:nsubj)) %dopar% {
-        
-        GPASub(Xstar[,,i], Qstar[[i]], k, kQ = NULL, ref_ds, scaling, reflection, centered=center)
-        
+        ProMises(Xstar[,,i], k=k, Q=Q[[i]], ref_ds=ref_ds, scaling=scaling, 
+                 reflection=reflection, centered=center)
       }
     }
     # else single parameter for every image
     else{
       out <- foreach(i = c(1:nsubj)) %dopar% {
-        
-        GPASub(Xstar[,,i], Qstar, k, kQ = NULL, ref_ds, scaling, reflection, centered=center)
-        
+        ProMises(Xstar[,,i], k=k, Q=Q, ref_ds=ref_ds, scaling=scaling, 
+                 reflection=reflection, centered=center) 
       }
     }
     count <- count + 1 
