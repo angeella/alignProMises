@@ -257,7 +257,8 @@ EfficientProMises <- function(data, maxIt = 10, t = 0.001, k = 0, Q = NULL, ref_
     # Different location parameter for each image
     if(!singleQ){
       out <- foreach(i = c(1:nsubj)) %dopar% {
-        ProMises(Xstar[,,i], k=k, Q=Qstar[[i]], ref_ds=ref_ds, scaling=scaling, 
+        ProMises(Xstar[,,i], k=k, Q=Qstar[[i]], ref_ds=ref_ds, 
+                 scaling=scaling, 
                  reflection=reflection, centered=center)
       }
     }

@@ -1,6 +1,8 @@
 #include <RcppArmadillo.h>
 #include <math.h>
+#include <Rcpp.h>
 using namespace Rcpp;
+using namespace arma;
 
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::plugins(cpp11)]] 
@@ -11,10 +13,13 @@ List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling,
   arma::mat U;
   arma::vec s;
   arma::mat V;
+  arma::mat Xest;
+  arma::mat R;
 //Put transposes to save memory.
   arma::mat trasp = (ref_ds.t() * X + k * Q.t()).t();
   arma::svd(U, s, V, trasp);
   arma::mat Vt = V.t();
+
   if(!reflection & scaling){
     arma::mat s_new;
     s_new.eye(nc,nc);
@@ -25,15 +30,13 @@ List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling,
     if (d < 0) {
       s_new(nc-1,nc-1) =  -1;
       }
-    arma::mat R = (U * s_new) * Vt;
+    R = (U * s_new) * Vt;
     double scale = arma::sum(s_new * s);
     if (!centered){
       double normX = arma::norm(X, "fro");
       scale = scale / std::pow(normX, 2);
     }
-    arma::mat Xest = X * R * scale;
-    List out = List::create(Named("Xest") = Xest, Named("R") = R);
-    return out; 
+    Xest = X * R * scale;
   }
   if(!reflection & !scaling){
     arma::mat s_new;
@@ -45,30 +48,26 @@ List ProMises(arma::mat X, float k, arma::mat Q, arma::mat ref_ds, bool scaling,
     if (d < 0) {
       s_new(nc-1,nc-1) =  -1;
     }
-    arma::mat R = (U * s_new) * Vt;
-    arma::mat Xest = X * R;
-    List out = List::create(Named("Xest") = Xest, Named("R") = R);
-    return out;  
+    R = (U * s_new) * Vt;
+    Xest = X * R;
   }
   if(reflection & scaling){
-    arma::mat R =  U * Vt;
+    R =  U * Vt;
     double scale =  arma::sum(s);
     if (!centered){
       double normX = arma::norm(X, "fro");
       scale = scale / std::pow(normX, 2);
     }
-    arma::mat Xest = X * R * scale;
-    List out = List::create(Named("Xest") = Xest, Named("R") = R);
-    return out;  
+    Xest = X * R * scale;
   }
 
   if(reflection & !scaling){
-    arma::mat R =  U * Vt;
-    arma::mat Xest = X * R;
-    List out = List::create(Named("Xest") = Xest, Named("R") = R);
-    return out; 
-  }
+    R =  U * Vt;
+    Xest = X * R;
 
+  }
+  List out = List::create(Named("Xest") = Xest, Named("R") = R);
+  return out; 
 }
 
 /*** R
